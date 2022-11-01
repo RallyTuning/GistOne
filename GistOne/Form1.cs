@@ -1,7 +1,6 @@
-using GistNet;
+//using GistNet;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using static GistOne.Gist;
 
 namespace GistOne
 {
@@ -18,15 +17,15 @@ namespace GistOne
         {
             try
             {
-                Create TheGist = new() { Token = tmptoken };
+                GistNet.Create TheGist = new(tmptoken);
                 TheGist.Content.IsPublic = false;
                 TheGist.Content.Description = "descrizione test, di non so quanti caratteri test";
-                TheGist.Content.FilesList.Add("new file.cs", new("public Form1()\r\n        {\r\n            InitializeComponent();\r\n\r\n\r\n        }"));
-                TheGist.Content.FilesList.Add("Z file.txt", new("contenuto del file"));
-                //TheGist.Content.FilesList.Add("README.md", new("# potrebbe essere la descrizione della gist"));
+                TheGist.Content.Files.Add("new file.cs", new("public Form1()\r\n        {\r\n            InitializeComponent();\r\n\r\n\r\n        }"));
+                TheGist.Content.Files.Add("Z file.txt", new("contenuto del file"));
+                //TheGist.Content.FilesList.Add("new file.cs", new("# potrebbe essere la descrizione della gist"));
 
                 string jsonString = await TheGist.Push();
-                Rootobject test = JsonSerializer.Deserialize<Rootobject>(jsonString);
+                Gist test = JsonSerializer.Deserialize<Gist>(jsonString);
                 JsonNode Jobj = JsonNode.Parse(jsonString);
 
 
@@ -48,31 +47,33 @@ namespace GistOne
         {
             try
             {
-                Browse TheGist = new() { Token = tmptoken, User = "RallyTuning" };
+                GistNet.Browse TheGist = new(tmptoken, "RallyTuning");
                 string jsonString = await TheGist.GetAll();
 
                 if (string.IsNullOrWhiteSpace(jsonString)) { throw new Exception("Json is empty"); }
 
-                JsonNode Jobj = JsonNode.Parse(jsonString)!;
+                //JsonNode Jobj = JsonNode.Parse(jsonString)!;
 
-                if (Jobj is null) { throw new Exception("Json is empty"); }
+                //if (Jobj is null) { throw new Exception("Json is empty"); }
+
+                List<Gist> GistsList = JsonSerializer.Deserialize<List<Gist>>(jsonString);
+
+                if (GistsList is null) { throw new Exception("Json is empty"); }
 
                 listView1.Items.Clear();
 
-                foreach (JsonNode? item in Jobj.AsArray())
+                foreach (Gist G in GistsList)
                 {
-                    if (item is null) { return; }
+                    if (G is null) { return; }
 
-                    ListViewItem LvItm = new(item["description"]!.ToString()) { Tag = item["id"].ToString() };
-                    LvItm.SubItems.Add(item["id"].ToString());
-                    LvItm.SubItems.Add(item["public"].ToString());
-                    LvItm.SubItems.Add(item["created_at"].ToString());
-                    LvItm.SubItems.Add(item["updated_at"].ToString());
-
-                    JsonObject TmpNode = (JsonObject)item["files"];
-                    LvItm.SubItems.Add(TmpNode.Count.ToString());
-
-                    LvItm.SubItems.Add(item["url"].ToString());
+                    ListViewItem LvItm = new(G.ID) { Tag = G.ID };
+                    LvItm.SubItems.Add(G.Description);
+                    LvItm.SubItems.Add(G.Owner.Login);
+                    LvItm.SubItems.Add(G.Public.ToString());
+                    LvItm.SubItems.Add(G.Created_At.ToString());
+                    LvItm.SubItems.Add(G.Updated_At.ToString());
+                    LvItm.SubItems.Add(G.Files.Count.ToString());
+                    LvItm.SubItems.Add(G.URL);
 
                     listView1.Items.Add(LvItm);
                 }
@@ -80,16 +81,25 @@ namespace GistOne
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
+            try
+            {
+                GistNet.UpdateGist Update = new(tmptoken, "cc738721b9610f6987e886ab8fb035c2");
+                Update.Content.Description = "nuova descrizione" + " " + DateTime.Now.ToString("HH_mm_ss");
+                Update.Content.Files.Add("aaa.txt", new("un nuovo file 1200000 " + DateTime.Now.ToString("HH_mm_ss")));
 
+                string jsonString = await Update.Patch();
+                Gist test = JsonSerializer.Deserialize<Gist>(jsonString);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private async void button4_Click(object sender, EventArgs e)
         {
             try
             {
-                Delete TheGist = new() { Token = tmptoken, ID = listView1.SelectedItems[0].Tag.ToString() };
+                GistNet.Delete TheGist = new(tmptoken, listView1.SelectedItems[0].Tag.ToString());
                 string jsonString = await TheGist.Confirm();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -99,14 +109,36 @@ namespace GistOne
         {
             try
             {
-                GistByID  TheGist = new() { Token = tmptoken };
+                GistNet.GetByID TheGist = new(tmptoken);
                 string jsonString = await TheGist.Get("f30e95f26dc3b63bc25f9bd664a0ddbb");
 
-                Console.Write("");
+                Gist test = JsonSerializer.Deserialize<Gist>(jsonString);
+                //JsonNode Jobj = JsonNode.Parse(jsonString);
 
-                Rootobject test = JsonSerializer.Deserialize<Rootobject>(jsonString);
-                JsonNode Jobj = JsonNode.Parse(jsonString);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
 
+        private async void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GistNet.RenameFiles Rename = new(tmptoken, "cc738721b9610f6987e886ab8fb035c2");
+                Rename.Content.Files.Add("ok.cs", new GistNet.RenameFiles.Details.FileContent("aaa.txt"));
+                //Rename.Content.Files.Add("il file.inf", new GistNet.RenameFiles.Details.FileContent("README.md"));
+                string jsonString = await Rename.Patch();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private async void button7_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                GistNet.DeleteFiles DelF = new(tmptoken, "cc738721b9610f6987e886ab8fb035c2");
+                DelF.Content.Files.Add("aaa.txt", new());
+                string jsonString = await DelF.Patch();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }

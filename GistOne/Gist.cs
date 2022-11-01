@@ -2,376 +2,312 @@
 
 namespace GistOne
 {
-
+    /// <summary>A class for a complete Gist</summary>
     public class Gist
     {
-        //    [JsonPropertyName("url")]
-        //    public string Url { get; set; } = string.Empty;
+        [JsonPropertyName("url")]
+        public string URL { get; set; } =string.Empty;
 
-        //    [JsonPropertyName("forks_url")]
-        //    public string ForksUrl { get; set; } = string.Empty;
+        [JsonPropertyName("forks_url")]
+        public string Forks_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("commits_url")]
-        //    public string CommitsUrl { get; set; } = string.Empty;
+        [JsonPropertyName("commits_url")]
+        public string Commits_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("id")]
-        //    public string Id { get; set; } = string.Empty;
+        [JsonPropertyName("id")]
+        public string ID { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("node_id")]
-        //    public string NodeId { get; set; } = string.Empty;
+        [JsonPropertyName("node_id")]
+        public string Node_ID { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("git_pull_url")]
-        //    public string GitPullUrl { get; set; } = string.Empty;
+        [JsonPropertyName("git_pull_url")]
+        public string Git_Pull_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("git_push_url")]
-        //    public string GitPushUrl { get; set; } = string.Empty;
+        [JsonPropertyName("git_push_url")]
+        public string Git_Push_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("html_url")]
-        //    public string HtmlUrl { get; set; } = string.Empty;
+        [JsonPropertyName("html_url")]
+        public string HTML_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("files")]
-        //    public List<Files> Files { get; set; } = new();
+        /// <summary>A list of files inside the Gist</summary>
+        [JsonPropertyName("files")]
+        public Dictionary<string, FileDetails> Files { get; set; } = new();
 
-        //    [JsonPropertyName("public")]
-        //    public bool Public { get; set; }
+        /// <summary>Public or private Gist (olny for logged user)</summary>
+        [JsonPropertyName("public")]
+        public bool Public { get; set; }
 
-        //    [JsonPropertyName("created_at")]
-        //    public DateTime CreatedAt { get; set; }
+        [JsonPropertyName("created_at")]
+        public DateTime Created_At { get; set; }
 
-        //    [JsonPropertyName("updated_at")]
-        //    public DateTime UpdatedAt { get; set; }
+        [JsonPropertyName("updated_at")]
+        public DateTime Updated_At { get; set; }
 
-        //    [JsonPropertyName("description")]
-        //    public string Description { get; set; } = string.Empty;
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("comments")]
-        //    public int Comments { get; set; }
+        /// <summary>Total comments</summary>
+        [JsonPropertyName("comments")]
+        public int Comments { get; set; }
 
-        //    [JsonPropertyName("user")]
-        //    public User User { get; set; } = new();
+#warning probabilmente per le gist pubbliche (testare):
+        [JsonPropertyName("user")]
+        public User User { get; set; } = new();
 
-        //    [JsonPropertyName("comments_url")]
-        //    public string CommentsUrl { get; set; } = string.Empty;
+        [JsonPropertyName("comments_url")]
+        public string Comments_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("owner")]
-        //    public Owner Owner { get; set; } = new();
+        [JsonPropertyName("owner")]
+        public Owner Owner { get; set; } = new();
 
-        //    [JsonPropertyName("forks")]
-        //    public List<Forks> Forks { get; set; } = new();
+        [JsonPropertyName("forks")]
+        public List<Forks> Forks { get; set; }= new();
 
-        //    [JsonPropertyName("history")]
-        //    public List<History> History { get; set; } = new();
+        [JsonPropertyName("history")]
+        public List<History> History { get; set; }= new();
 
-        //    [JsonPropertyName("truncated")]
-        //    public bool Truncated { get; set; }
-        //}
+        [JsonPropertyName("truncated")]
+        public bool Truncated { get; set; }
+    }
 
+    /// <summary>Details of the file</summary>
+    public class FileDetails
+    {
+        [JsonPropertyName("filename")]
+        public string Filename { get; set; } = string.Empty;
 
-        //public class User
-        //{
-        //    [JsonPropertyName("login")]
-        //    public string Login { get; set; } = string.Empty;
+        [JsonPropertyName("type")]
+        public string Type { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("id")]
-        //    public int Id { get; set; }
+        [JsonPropertyName("language")]
+        public string Language { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("node_id")]
-        //    public string NodeId { get; set; } = string.Empty;
+        [JsonPropertyName("raw_url")]
+        public string Raw_URL { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("avatar_url")]
-        //    public string AvatarUrl { get; set; } = string.Empty;
+        [JsonPropertyName("size")]
+        public int Size { get; set; }
 
-        //    [JsonPropertyName("gravatar_id")]
-        //    public string GravatarId { get; set; } = string.Empty;
+        [JsonPropertyName("truncated")]
+        public bool Truncated { get; set; }
 
-        //    [JsonPropertyName("url")]
-        //    public string Url { get; set; } = string.Empty;
+        /// <summary>Content of the file</summary>
+        [JsonPropertyName("content")]
+        public string Content { get; set; } = string.Empty;
 
-        //    [JsonPropertyName("html_url")]
-        //    public string HtmlUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("followers_url")]
-        //    public string FollowersUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("following_url")]
-        //    public string FollowingUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("gists_url")]
-        //    public string GistsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("starred_url")]
-        //    public string StarredUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("subscriptions_url")]
-        //    public string SubscriptionsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("organizations_url")]
-        //    public string OrganizationsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("repos_url")]
-        //    public string ReposUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("events_url")]
-        //    public string EventsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("received_events_url")]
-        //    public string ReceivedEventsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("type")]
-        //    public string Type { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("site_admin")]
-        //    public bool SiteAdmin { get; set; }
-        //}
-
-        //public class Owner
-        //{
-        //    [JsonPropertyName("login")]
-        //    public string Login { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("id")]
-        //    public int Id { get; set; }
-
-        //    [JsonPropertyName("node_id")]
-        //    public string NodeId { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("avatar_url")]
-        //    public string AvatarUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("gravatar_id")]
-        //    public string GravatarId { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("url")]
-        //    public string Url { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("html_url")]
-        //    public string HtmlUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("followers_url")]
-        //    public string FollowersUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("following_url")]
-        //    public string FollowingUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("gists_url")]
-        //    public string GistsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("starred_url")]
-        //    public string StarredUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("subscriptions_url")]
-        //    public string SubscriptionsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("organizations_url")]
-        //    public string OrganizationsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("repos_url")]
-        //    public string ReposUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("events_url")]
-        //    public string EventsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("received_events_url")]
-        //    public string ReceivedEventsUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("type")]
-        //    public string Type { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("site_admin")]
-        //    public bool SiteAdmin { get; set; }
-        //}
-
-        //public class Files
-        //{
-        //    [JsonPropertyName("filename")]
-        //    public string Filename { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("type")]
-        //    public string Type { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("language")]
-        //    public string Language { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("raw_url")]
-        //    public string RawUrl { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("size")]
-        //    public int Size { get; set; }
-
-        //    [JsonPropertyName("truncated")]
-        //    public bool Truncated { get; set; }
-
-        //    [JsonPropertyName("content")]
-        //    public string Content { get; set; } = string.Empty;
-        //}
-
-        //public class History
-        //{
-        //    [JsonPropertyName("user")]
-        //    public User User { get; set; } = new();
-
-        //    [JsonPropertyName("version")]
-        //    public string Version { get; set; } = string.Empty;
-
-        //    [JsonPropertyName("committed_at")]
-        //    public DateTime CommittedAt { get; set; }
-
-        //    [JsonPropertyName("change_status")]
-        //    public ChangeStatus ChangeStatus { get; set; } = new();
-
-        //    [JsonPropertyName("url")]
-        //    public string Url { get; set; } = string.Empty;
-        //}
-
-        //public class ChangeStatus
-        //{
-        //    [JsonPropertyName("total")]
-        //    public int Total { get; set; }
-
-        //    [JsonPropertyName("additions")]
-        //    public int Additions { get; set; }
-
-        //    [JsonPropertyName("deletions")]
-        //    public int Deletions { get; set; }
-        //}
-
-        //public class Forks
-        //{
-
-        //}
-
-
-        public class Rootobject
+        /// <summary>Content of the file</summary>
+        public FileDetails(string Content)
         {
-            public string url { get; set; }
-            public string forks_url { get; set; }
-            public string commits_url { get; set; }
-            public string id { get; set; }
-            public string node_id { get; set; }
-            public string git_pull_url { get; set; }
-            public string git_push_url { get; set; }
-            public string html_url { get; set; }
-            /// <summary>A list of files inside your Gist</summary>
-            [JsonPropertyName("files")]
-            public Dictionary<string, FileContent> FilesList { get; set; } = new();
-
-            /// <summary>A list of files inside your Gist</summary>
-            [JsonPropertyName("public")]
-            public bool Public { get; set; }
-            public DateTime created_at { get; set; }
-            public DateTime updated_at { get; set; }
-            public string description { get; set; }
-
-            /// <summary>A list of files inside your Gist</summary>
-            [JsonPropertyName("comments")]
-            public int Comments { get; set; }
-            public object user { get; set; }
-            public string comments_url { get; set; }
-            public Owner owner { get; set; }
-            public object[] forks { get; set; }
-            public History[] history { get; set; }
-            public bool truncated { get; set; }
+            this.Content = Content;
         }
+    }
 
+    /// <summary>Different from Owner because this is for public users</summary>
+    public class User
+    {
+        [JsonPropertyName("login")]
+        public string Login { get; set; } = string.Empty;
 
+        [JsonPropertyName("id")]
+        public int ID { get; set; }
 
-        /// <summary>A class for the content of your file</summary>
-        public class FileContent
-        {
-            /// <summary>Content of your file</summary>
-            [JsonPropertyName("content")]
-            public string Content { get; set; } = string.Empty;
+        [JsonPropertyName("node_id")]
+        public string Node_ID { get; set; } = string.Empty;
 
-            /// <summary>Content of your file</summary>
-            public FileContent(string Content)
-            {
-                this.Content = Content;
-            }
-        }
+        [JsonPropertyName("avatar_url")]
+        public string Avatar_URL { get; set; } = string.Empty;
 
-        public class ZFileTxt
-        {
-            public string filename { get; set; }
-            public string type { get; set; }
-            public string language { get; set; }
-            public string raw_url { get; set; }
-            public int size { get; set; }
-            public bool truncated { get; set; }
-            public string content { get; set; }
-        }
+        [JsonPropertyName("gravatar_id")]
+        public string Gravatar_ID { get; set; } = string.Empty;
 
-        public class NewFileCs
-        {
-            public string filename { get; set; }
-            public string type { get; set; }
-            public string language { get; set; }
-            public string raw_url { get; set; }
-            public int size { get; set; }
-            public bool truncated { get; set; }
-            public string content { get; set; }
-        }
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
 
-        public class Owner
-        {
-            public string login { get; set; }
-            public int id { get; set; }
-            public string node_id { get; set; }
-            public string avatar_url { get; set; }
-            public string gravatar_id { get; set; }
-            public string url { get; set; }
-            public string html_url { get; set; }
-            public string followers_url { get; set; }
-            public string following_url { get; set; }
-            public string gists_url { get; set; }
-            public string starred_url { get; set; }
-            public string subscriptions_url { get; set; }
-            public string organizations_url { get; set; }
-            public string repos_url { get; set; }
-            public string events_url { get; set; }
-            public string received_events_url { get; set; }
-            public string type { get; set; }
-            public bool site_admin { get; set; }
-        }
+        [JsonPropertyName("html_url")]
+        public string HTML_URL { get; set; } = string.Empty;
 
-        public class History
-        {
-            public User user { get; set; }
-            public string version { get; set; }
-            public DateTime committed_at { get; set; }
-            public Change_Status change_status { get; set; }
-            public string url { get; set; }
-        }
+        [JsonPropertyName("followers_url")]
+        public string Followers_URL { get; set; } = string.Empty;
 
-        public class User
-        {
-            public string login { get; set; }
-            public int id { get; set; }
-            public string node_id { get; set; }
-            public string avatar_url { get; set; }
-            public string gravatar_id { get; set; }
-            public string url { get; set; }
-            public string html_url { get; set; }
-            public string followers_url { get; set; }
-            public string following_url { get; set; }
-            public string gists_url { get; set; }
-            public string starred_url { get; set; }
-            public string subscriptions_url { get; set; }
-            public string organizations_url { get; set; }
-            public string repos_url { get; set; }
-            public string events_url { get; set; }
-            public string received_events_url { get; set; }
-            public string type { get; set; }
-            public bool site_admin { get; set; }
-        }
+        [JsonPropertyName("following_url")]
+        public string Following_URL { get; set; } = string.Empty;
 
-        public class Change_Status
-        {
-            public int total { get; set; }
-            public int additions { get; set; }
-            public int deletions { get; set; }
-        }
+        [JsonPropertyName("gists_url")]
+        public string Gists_URL { get; set; } = string.Empty;
 
+        [JsonPropertyName("starred_url")]
+        public string Starred_URL { get; set; } = string.Empty;
 
+        [JsonPropertyName("subscriptions_url")]
+        public string Subscriptions_URL { get; set; } = string.Empty;
 
+        [JsonPropertyName("organizations_url")]
+        public string Organizations_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("repos_url")]
+        public string Repos_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("events_url")]
+        public string Events_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("received_events_url")]
+        public string Received_Events_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; } = string.Empty;
+
+        [JsonPropertyName("site_admin")]
+        public bool Site_Admin { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("company")]
+        public string Company { get; set; } = string.Empty;
+
+        [JsonPropertyName("blog")]
+        public string Blog { get; set; } = string.Empty;
+
+        [JsonPropertyName("location")]
+        public string Location { get; set; } = string.Empty;
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; } = string.Empty;
+
+        [JsonPropertyName("hireable")]
+        public object? Hireable { get; set; } // It's a boolean, butgive an error when "false".
+
+        [JsonPropertyName("bio")]
+        public string Bio { get; set; } = string.Empty;
+
+        [JsonPropertyName("twitter_username")]
+        public string Twitter_Username { get; set; } = string.Empty;
+
+        [JsonPropertyName("public_repos")]
+        public int Public_Repos { get; set; }
+
+        [JsonPropertyName("public_gists")]
+        public int Public_Gists { get; set; }
+
+        [JsonPropertyName("followers")]
+        public int Followers { get; set; }
+
+        [JsonPropertyName("following")]
+        public int Following { get; set; }
+
+        [JsonPropertyName("created_at")]
+        public DateTime Created_At { get; set; }
+
+        [JsonPropertyName("updated_at")]
+        public DateTime Updated_At { get; set; }
+    }
+
+    /// <summary>Similar to User class, but compact</summary>
+    public class Owner
+    {
+        [JsonPropertyName("login")]
+        public string Login { get; set; } = string.Empty;
+
+        [JsonPropertyName("id")]
+        public int ID { get; set; }
+
+        [JsonPropertyName("node_id")]
+        public string Node_ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("avatar_url")]
+        public string Avatar_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("gravatar_id")]
+        public string Gravatar_ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("html_url")]
+        public string HTML_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("followers_url")]
+        public string Followers_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("following_url")]
+        public string Following_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("gists_url")]
+        public string Gists_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("starred_url")]
+        public string Starred_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("subscriptions_url")]
+        public string Subscriptions_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("organizations_url")]
+        public string Organizations_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("repos_url")]
+        public string Repos_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("events_url")]
+        public string Events_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("received_events_url")]
+        public string Received_Events_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; } = string.Empty;
+
+        [JsonPropertyName("site_admin")]
+        public bool Site_Admin { get; set; }
+    }
+
+    /// <summary>History of Gist changes</summary>
+    public class History
+    {
+        [JsonPropertyName("user")]
+        public User User { get; set; } = new();
+
+        [JsonPropertyName("version")]
+        public string Version { get; set; } = string.Empty;
+
+        [JsonPropertyName("committed_at")]
+        public DateTime Committed_At { get; set; }
+
+        [JsonPropertyName("change_status")]
+        public Change_Status Change_Status { get; set; } = new();
+
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
+    }
+
+    /// <summary>Forks of the Gist</summary>
+    public class Forks
+    {
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("user")]
+        public User User { get; set; }=new();
+
+        [JsonPropertyName("id")]
+        public string ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("created_at")]
+        public DateTime Created_At { get; set; }
+
+        [JsonPropertyName("updated_at")]
+        public DateTime Updated_At { get; set; }
+    }
+
+    /// <summary>Status changes of History class</summary>
+    public class Change_Status
+    {
+        [JsonPropertyName("total")]
+        public int Total { get; set; }
+
+        [JsonPropertyName("additions")]
+        public int Additions { get; set; }
+
+        [JsonPropertyName("deletions")]
+        public int Deletions { get; set; }
     }
 }
