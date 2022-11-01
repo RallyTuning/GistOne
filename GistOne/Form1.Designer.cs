@@ -33,16 +33,18 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+            this.id = new System.Windows.Forms.ColumnHeader();
+            this.desc = new System.Windows.Forms.ColumnHeader();
+            this.user = new System.Windows.Forms.ColumnHeader();
+            this.ispublic = new System.Windows.Forms.ColumnHeader();
+            this.created = new System.Windows.Forms.ColumnHeader();
+            this.edited = new System.Windows.Forms.ColumnHeader();
+            this.files = new System.Windows.Forms.ColumnHeader();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -91,13 +93,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7});
+            this.id,
+            this.desc,
+            this.user,
+            this.ispublic,
+            this.created,
+            this.edited,
+            this.files});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(12, 41);
@@ -107,25 +109,39 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // id
             // 
-            this.columnHeader1.Width = 150;
+            this.id.Text = "id";
+            this.id.Width = 90;
             // 
-            // columnHeader3
+            // desc
             // 
-            this.columnHeader3.Width = 150;
+            this.desc.Text = "desc";
+            this.desc.Width = 200;
             // 
-            // columnHeader4
+            // user
             // 
-            this.columnHeader4.Width = 150;
+            this.user.Text = "user";
+            this.user.Width = 100;
             // 
-            // columnHeader5
+            // ispublic
             // 
-            this.columnHeader5.Width = 150;
+            this.ispublic.Text = "public";
             // 
-            // columnHeader7
+            // created
             // 
-            this.columnHeader7.Width = 200;
+            this.created.Text = "created";
+            this.created.Width = 130;
+            // 
+            // edited
+            // 
+            this.edited.Text = "edited";
+            this.edited.Width = 130;
+            // 
+            // files
+            // 
+            this.files.Text = "files";
+            this.files.Width = 40;
             // 
             // button5
             // 
@@ -157,11 +173,32 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(750, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "label1";
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(635, 12);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 9;
+            this.button8.Text = "revision";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -171,8 +208,10 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -193,5 +232,14 @@
         private Button button5;
         private Button button6;
         private Button button7;
+        private Label label1;
+        private ColumnHeader id;
+        private ColumnHeader desc;
+        private ColumnHeader user;
+        private ColumnHeader ispublic;
+        private ColumnHeader created;
+        private ColumnHeader edited;
+        private ColumnHeader files;
+        private Button button8;
     }
 }

@@ -19,9 +19,9 @@ namespace GistOne
             {
                 GistNet.Create TheGist = new(tmptoken);
                 TheGist.Content.IsPublic = false;
-                TheGist.Content.Description = "descrizione test, di non so quanti caratteri test";
-                TheGist.Content.Files.Add("new file.cs", new("public Form1()\r\n        {\r\n            InitializeComponent();\r\n\r\n\r\n        }"));
-                TheGist.Content.Files.Add("Z file.txt", new("contenuto del file"));
+                TheGist.Content.Description = "una gist (" + new Random().Next(1, 100).ToString() + ") a caso per arrivare a 65";
+                TheGist.Content.Files.Add("file " + new Random().Next(1, 100).ToString() + ".txt", new(new Random().Next(1, 999999).ToString()));
+                //TheGist.Content.Files.Add("Z file.txt", new("contenuto del file"));
                 //TheGist.Content.FilesList.Add("new file.cs", new("# potrebbe essere la descrizione della gist"));
 
                 string jsonString = await TheGist.Push();
@@ -47,16 +47,28 @@ namespace GistOne
         {
             try
             {
-                GistNet.Browse TheGist = new(tmptoken, "RallyTuning");
-                string jsonString = await TheGist.GetAll();
+                List<Gist> GistsList = new();
+                int CurPage = 1;
 
-                if (string.IsNullOrWhiteSpace(jsonString)) { throw new Exception("Json is empty"); }
+                while (true)
+                {
+                    GistNet.Browse TheGist = new(tmptoken, "RallyTuning", 100, CurPage);
+                    string jsonString = await TheGist.GetAll();
 
-                //JsonNode Jobj = JsonNode.Parse(jsonString)!;
+                    if (string.IsNullOrWhiteSpace(jsonString)) { throw new Exception("Json is empty"); }
 
-                //if (Jobj is null) { throw new Exception("Json is empty"); }
+                    //JsonNode Jobj = JsonNode.Parse(jsonString)!;
 
-                List<Gist> GistsList = JsonSerializer.Deserialize<List<Gist>>(jsonString);
+                    //if (Jobj is null) { throw new Exception("Json is empty"); }
+
+                    List<Gist> TempList = JsonSerializer.Deserialize<List<Gist>>(jsonString);
+
+                    if (TempList is null || TempList.Count == 0) { break; }
+
+                    GistsList.AddRange(TempList);
+
+                    CurPage++;
+                }
 
                 if (GistsList is null) { throw new Exception("Json is empty"); }
 
@@ -77,6 +89,8 @@ namespace GistOne
 
                     listView1.Items.Add(LvItm);
                 }
+
+                label1.Text = listView1.Items.Count.ToString();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -109,8 +123,8 @@ namespace GistOne
         {
             try
             {
-                GistNet.GetByID TheGist = new(tmptoken);
-                string jsonString = await TheGist.Get("f30e95f26dc3b63bc25f9bd664a0ddbb");
+                GistNet.GetByID TheGist = new(tmptoken, "f30e95f26dc3b63bc25f9bd664a0ddbb");
+                string jsonString = await TheGist.Get();
 
                 Gist test = JsonSerializer.Deserialize<Gist>(jsonString);
                 //JsonNode Jobj = JsonNode.Parse(jsonString);
@@ -139,6 +153,18 @@ namespace GistOne
                 GistNet.DeleteFiles DelF = new(tmptoken, "cc738721b9610f6987e886ab8fb035c2");
                 DelF.Content.Files.Add("aaa.txt", new());
                 string jsonString = await DelF.Patch();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private async void button8_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GistNet.GetGistRevision TheGist = new(tmptoken, "f30e95f26dc3b63bc25f9bd664a0ddbb", "a14f4ff9ef0efd9f585b00f81223b3e2fbc21304");
+                string jsonString = await TheGist.Get();
+
+                Gist test = JsonSerializer.Deserialize<Gist>(jsonString);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
