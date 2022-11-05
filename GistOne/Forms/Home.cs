@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Text.Json;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace GistOne.Forms
 {
@@ -21,6 +15,41 @@ namespace GistOne.Forms
         {
             Form1 frm = new();
             frm.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Config Set = new();
+                Set.Token = "fdfsdfsdfsd";
+
+                var Opzioni = new JsonSerializerOptions { WriteIndented = true };
+
+                string JSONString = JsonSerializer.Serialize(Set, Opzioni);
+
+                //if (!Directory.Exists(Funzioni.Path_MailingLists)) { Directory.CreateDirectory(Funzioni.Path_MailingLists); }
+
+                using (FileStream FS = new("Settings.json", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    FS.SetLength(0);
+                    using StreamWriter SW = new(FS, System.Text.Encoding.UTF8);
+                    SW.Write(JSONString);
+                }
+
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Task<string> JsonString = File.ReadAllTextAsync("Settings.json");
+                Config Set = JsonSerializer.Deserialize<Config>(JsonString.Result);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
     }
 }

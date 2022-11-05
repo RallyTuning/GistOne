@@ -93,6 +93,7 @@
             this.TsBtn_Create.Size = new System.Drawing.Size(70, 52);
             this.TsBtn_Create.Text = "&Create new";
             this.TsBtn_Create.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TsBtn_Create.Click += new System.EventHandler(this.TsBtn_Create_Click);
             // 
             // TsBtn_Settings
             // 
@@ -103,6 +104,7 @@
             this.TsBtn_Settings.Size = new System.Drawing.Size(53, 52);
             this.TsBtn_Settings.Text = "&Settings";
             this.TsBtn_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TsBtn_Settings.Click += new System.EventHandler(this.TsBtn_Settings_Click);
             // 
             // TsBtn_About
             // 
@@ -113,6 +115,7 @@
             this.TsBtn_About.Size = new System.Drawing.Size(44, 52);
             this.TsBtn_About.Text = "&About";
             this.TsBtn_About.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TsBtn_About.Click += new System.EventHandler(this.TsBtn_About_Click);
             // 
             // panel1
             // 

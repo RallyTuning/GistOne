@@ -5,6 +5,8 @@
         public Main()
         {
             InitializeComponent();
+
+            panel1.DoubleBuffering();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -12,6 +14,8 @@
             try
             {
                 this.Text = Application.ProductName;
+
+                Functions.ReadSettings();
 
                 LoadAllForms();
                 OpenForm("Home");
@@ -35,6 +39,34 @@
             try
             {
                 OpenForm((ToolStripButton)sender);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void TsBtn_Create_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenForm((ToolStripButton)sender);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void TsBtn_Settings_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Settings S =new();
+                S.ShowDialog();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void TsBtn_About_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -63,6 +95,7 @@
 
         private void OpenForm(string Name)
         {
+            panel1.SuspendLayout();
             foreach (Form F in panel1.Controls.OfType<Form>())
             {
                 if (F.Name == Name)
@@ -70,10 +103,11 @@
                 else
                 { F.Hide(); }
             }
+            panel1.ResumeLayout();
         }
 
-        #endregion
 
+        #endregion
 
     }
 }
