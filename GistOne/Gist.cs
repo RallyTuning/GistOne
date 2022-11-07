@@ -6,7 +6,7 @@ namespace GistOne
     public class Gist
     {
         [JsonPropertyName("url")]
-        public string URL { get; set; } =string.Empty;
+        public string URL { get; set; } = string.Empty;
 
         [JsonPropertyName("forks_url")]
         public string Forks_URL { get; set; } = string.Empty;
@@ -60,11 +60,14 @@ namespace GistOne
         [JsonPropertyName("owner")]
         public Owner Owner { get; set; } = new();
 
+        [JsonPropertyName("fork_of")]
+        public Fork_Of Fork_Of { get; set; } = new();
+
         [JsonPropertyName("forks")]
-        public List<Forks> Forks { get; set; }= new();
+        public List<Forks> Forks { get; set; } = new();
 
         [JsonPropertyName("history")]
-        public List<History> History { get; set; }= new();
+        public List<History> History { get; set; } = new();
 
         [JsonPropertyName("truncated")]
         public bool Truncated { get; set; }
@@ -286,7 +289,7 @@ namespace GistOne
         public string URL { get; set; } = string.Empty;
 
         [JsonPropertyName("user")]
-        public User User { get; set; }=new();
+        public User User { get; set; } = new();
 
         [JsonPropertyName("id")]
         public string ID { get; set; } = string.Empty;
@@ -296,6 +299,62 @@ namespace GistOne
 
         [JsonPropertyName("updated_at")]
         public DateTime Updated_At { get; set; }
+    }
+
+    /// <summary>Gist forked from</summary>
+    public class Fork_Of
+    {
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("forks_url")]
+        public string Forks_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("commits_url")]
+        public string Commits_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("id")]
+        public string ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("node_id")]
+        public string Node_ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("git_pull_url")]
+        public string Git_Pull_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("git_push_url")]
+        public string Git_Push_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("html_url")]
+        public string HTML_URL { get; set; } = string.Empty;
+
+        /// <summary>A list of files inside the Gist</summary>
+        [JsonPropertyName("files")]
+        public Dictionary<string, FileDetails> Files { get; set; } = new();
+
+        [JsonPropertyName("public")]
+        public bool Public { get; set; }
+
+        [JsonPropertyName("created_at")]
+        public DateTime Created_At { get; set; }
+
+        [JsonPropertyName("updated_at")]
+        public DateTime Updated_At { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty;
+
+        [JsonPropertyName("comments")]
+        public int Comments { get; set; }
+
+        [JsonPropertyName("user")]
+        public User User { get; set; } = new();
+
+        [JsonPropertyName("comments_url")]
+        public string Comments_URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("owner")]
+        public Owner Owner { get; set; } = new();
     }
 
     /// <summary>Status changes of History class</summary>

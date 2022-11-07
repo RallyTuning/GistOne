@@ -222,13 +222,6 @@
         private Button button3;
         private Button button4;
         private ListView listView1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
-        private ColumnHeader columnHeader5;
-        private ColumnHeader columnHeader6;
-        private ColumnHeader columnHeader7;
         private Button button5;
         private Button button6;
         private Button button7;

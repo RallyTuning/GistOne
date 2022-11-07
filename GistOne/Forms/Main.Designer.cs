@@ -134,6 +134,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Ts_Top);
             this.DoubleBuffered = true;
+            this.MinimumSize = new System.Drawing.Size(900, 600);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GistOne";
