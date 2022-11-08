@@ -51,7 +51,7 @@ namespace GistOne.Forms
 
                 while (true)
                 {
-                    GistNet.Browse TheGist = new(Functions.Settings.Token, Functions.Settings.Username, 100, CurPage);
+                    GistNet.MyGists TheGist = new(Functions.Settings.Token, 100, CurPage);
                     string ReturnedString = await TheGist.GetAll();
 
 
@@ -104,11 +104,13 @@ namespace GistOne.Forms
                 foreach (Gist G in GistsList)
                 {
                     if (G is null) { return; }
+                    if (G.Description is null) { G.Description = ""; }
+
                     if (G.Description.Contains(Filter, StringComparison.OrdinalIgnoreCase))
                     {
                         //dt.Rows.Add(G.ID, Properties.Resources.info_rhombus, G.Description);
                         Image Icon = G.Public ? Properties.Resources.page_white_world : Properties.Resources.page_white;
-                        Dgw_Gists.Rows.Add(G.ID, Icon, G.Description);
+                        Dgw_Gists.Rows.Add(G.ID, Icon, G.Description, G.Owner.Login, G.Created_At, G.Updated_At, G.HTML_URL);
                     }
                 }
 
@@ -169,7 +171,7 @@ namespace GistOne.Forms
         {
             try
             {
-                DgwCol_Text.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
+                DgwCol_Description.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -178,7 +180,7 @@ namespace GistOne.Forms
         {
             try
             {
-                DgwCol_Text.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
+                DgwCol_Description.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -234,29 +236,6 @@ namespace GistOne.Forms
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        public async Task<string> GetAll2()
-        {
-            try
-            {
-                HttpResponseMessage Res;
-
-                using HttpClient HClnt = new();
-                using HttpRequestMessage Req = new(new HttpMethod("GET"), "https://api.github.com/gists");
-                Req.Headers.Accept.Clear();
-                Req.Headers.Add("User-Agent", "GistNet");
-                Req.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-                Req.Headers.Add("Authorization", "Bearer " + Functions.Settings.Token);
-
-                Res = await HClnt.SendAsync(Req);
-                Res.EnsureSuccessStatusCode();
-
-                string StrRes = await Res.Content.ReadAsStringAsync();
-
-                return StrRes;
-            }
-            catch (Exception ex) { throw new Exception(ex.Message, ex); }
-        }
-
         private void ClearCntls()
         {
             Lsv_Files.Items.Clear();
@@ -274,5 +253,88 @@ namespace GistOne.Forms
             TsLbl_Total.Text = "Total: 0";
         }
 
+        #region Toolbar
+
+        private void TsBtn_Open_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Dgw_Gists.SelectedRows.Count < 1) { MessageBox.Show("No gist selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                string GID = Dgw_Gists.SelectedRows[0].Cells[DgwCol_ID.Index].Value.ToString() ?? "";
+
+                OpenGist OG = new(GID);
+                OG.Name = GID;
+                OG.Text = GID;
+                OG.TopLevel = false;         // First
+                Functions.LoadOneForms(OG); // Then
+                OG.Dock = DockStyle.Fill;  // Finally
+
+                Functions.ParseForm(GID,false);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private async void TsBtn_ChangeDesc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Dgw_Gists.SelectedRows.Count < 1) { MessageBox.Show("No gist selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                string GID = Dgw_Gists.SelectedRows[0].Cells[DgwCol_ID.Index].Value.ToString() ?? "";
+
+                Dgw_Gists.SelectedRows[0].Cells[DgwCol_Description.Index].ReadOnly = false;
+
+                DataGridViewRow DGR = Dgw_Gists.SelectedRows[0];
+
+
+                Dgw_Gists.CurrentCell = Dgw_Gists.SelectedRows[0].Cells[DgwCol_Description.Index];
+                Dgw_Gists.BeginEdit(true);
+
+                return;
+
+                GistNet.UpdateGist ChangeDesc = new(Functions.Settings.Token, GID);
+                ChangeDesc.Content.Description = "";
+
+                string ReturnedString = await ChangeDesc.Patch();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void TsBtn_CopyUrl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Dgw_Gists.SelectedRows.Count < 1) { MessageBox.Show("No gist selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                string GURL = Dgw_Gists.SelectedRows[0].Cells[DgwCol_URL.Index].Value.ToString() ?? "";
+                Clipboard.SetText(GURL);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private async void TsBtn_Delete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Dgw_Gists.SelectedRows.Count < 1) { MessageBox.Show("No gist selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                string GID = Dgw_Gists.SelectedRows[0].Cells[DgwCol_ID.Index].Value.ToString() ?? "";
+
+                if (MessageBox.Show("Are you sure you want to delete this Gist?" + Environment.NewLine + GID, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) { return; }
+
+                GistNet.Delete Destroy = new(Functions.Settings.Token, GID);
+                string ReturnedString = await Destroy.Confirm();
+
+                if (ReturnedString == "NoContent")
+                {
+                    MessageBox.Show("Deleted", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    throw new Exception(ReturnedString);
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+
+        #endregion
     }
 }

@@ -63,5 +63,52 @@ namespace GistOne
             catch (JsonException) { MessageBox.Show("Corrupted configuration file. Please generate a new one!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
+
+       internal static Main FM;
+
+        internal static void LoadAllForms()
+        {
+            List<Form> FormList = new() { new Home(), new MyGists() };
+
+            foreach (Form F in FormList)
+            {
+                LoadOneForms(F);
+            }
+        }
+
+        internal static void LoadOneForms( Form F)
+        {
+            F.TopLevel = false;         // First
+            FM.panel1.Controls.Add(F); // Then
+            F.Dock = DockStyle.Fill;  // Finally
+        }
+
+        internal static void ParseForm( string Name, bool Close)
+        {
+            Panel P = FM.panel1;
+
+            P.SuspendLayout();
+            foreach (Form F in P.Controls.OfType<Form>())
+            {
+                if (Close)
+                {
+                    if (F.Name == Name)
+                    { 
+                        F.Dispose(); 
+                        P.Controls.Remove(F);
+                        break;
+                    }
+                }
+                else
+                {
+                    if (F.Name == Name)
+                    { F.Show(); break; }
+                    else
+                    { F.Hide(); }
+                }
+            }
+            P.ResumeLayout();
+        }
+
     }
 }

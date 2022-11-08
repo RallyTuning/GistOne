@@ -7,6 +7,7 @@
             InitializeComponent();
 
             panel1.DoubleBuffering();
+            Functions.FM = this;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -17,8 +18,8 @@
 
                 Functions.ReadSettings();
 
-                LoadAllForms();
-                OpenForm("Home");
+                Functions.LoadAllForms();
+                Functions.ParseForm("Home",false);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -56,7 +57,7 @@
         {
             try
             {
-                Settings S =new();
+                Settings S = new();
                 S.ShowDialog();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -66,7 +67,7 @@
         {
             try
             {
-                
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -76,35 +77,13 @@
 
         #region Voids
 
-        private void LoadAllForms()
-        {
-            List<Form> FormList = new() { new Home(), new MyGists() };
-
-            foreach (Form F in FormList)
-            {
-                F.TopLevel = false;        // First
-                panel1.Controls.Add(F);   // Then
-                F.Dock = DockStyle.Fill; // Finally
-            }
-        }
 
         private void OpenForm(ToolStripButton TSBTN)
         {
-            OpenForm(TSBTN.Name.Split("_").Last<string>());
+            Functions.ParseForm(TSBTN.Name.Split("_").Last<string>(),false);
         }
 
-        private void OpenForm(string Name)
-        {
-            panel1.SuspendLayout();
-            foreach (Form F in panel1.Controls.OfType<Form>())
-            {
-                if (F.Name == Name)
-                { F.Show(); }
-                else
-                { F.Hide(); }
-            }
-            panel1.ResumeLayout();
-        }
+
 
 
         #endregion

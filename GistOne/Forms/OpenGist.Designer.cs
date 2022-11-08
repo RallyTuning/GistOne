@@ -1,6 +1,6 @@
 ﻿namespace GistOne.Forms
 {
-    partial class MyGists
+    partial class OpenGist
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Txt_Search = new System.Windows.Forms.TextBox();
-            this.Btn_Search = new System.Windows.Forms.Button();
-            this.Toolbar_Gists = new System.Windows.Forms.ToolStrip();
-            this.TsLbl_Total = new System.Windows.Forms.ToolStripLabel();
-            this.TsBtn_Open = new System.Windows.Forms.ToolStripButton();
-            this.TsBtn_ChangeDesc = new System.Windows.Forms.ToolStripButton();
-            this.TsBtn_CopyUrl = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.TsBtn_Delete = new System.Windows.Forms.ToolStripButton();
+            this.Lbl_GistID = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Lsv_Files = new System.Windows.Forms.ListView();
             this.Col_Files_Name = new System.Windows.Forms.ColumnHeader();
@@ -60,126 +50,25 @@
             this.Lbl_Created = new System.Windows.Forms.Label();
             this.label11 = new GistOne.ImageLabel();
             this.label10 = new GistOne.ImageLabel();
-            this.Dgw_Gists = new System.Windows.Forms.DataGridView();
-            this.DgwCol_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_Img = new System.Windows.Forms.DataGridViewImageColumn();
-            this.DgwCol_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_User = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_Created = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_LastEdit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_URL = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.Toolbar_Gists.SuspendLayout();
+            this.Txt_Search = new System.Windows.Forms.TextBox();
+            this.Rtb_Gist = new System.Windows.Forms.RichTextBox();
+            this.Btn_Search = new System.Windows.Forms.Button();
+            this.Btn_Close = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Dgw_Gists)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // Lbl_GistID
             // 
-            this.label1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(884, 30);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "My Gists";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Txt_Search
-            // 
-            this.Txt_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Txt_Search.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Txt_Search.Location = new System.Drawing.Point(12, 43);
-            this.Txt_Search.Name = "Txt_Search";
-            this.Txt_Search.PlaceholderText = "Search a Gist...";
-            this.Txt_Search.Size = new System.Drawing.Size(779, 29);
-            this.Txt_Search.TabIndex = 0;
-            this.Txt_Search.TextChanged += new System.EventHandler(this.Txt_Search_TextChanged);
-            // 
-            // Btn_Search
-            // 
-            this.Btn_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Search.Image = global::GistOne.Properties.Resources.arrow_refresh16;
-            this.Btn_Search.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_Search.Location = new System.Drawing.Point(797, 43);
-            this.Btn_Search.Name = "Btn_Search";
-            this.Btn_Search.Size = new System.Drawing.Size(75, 29);
-            this.Btn_Search.TabIndex = 1;
-            this.Btn_Search.Tag = "";
-            this.Btn_Search.Text = "&Refresh";
-            this.Btn_Search.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Search.UseVisualStyleBackColor = true;
-            this.Btn_Search.Click += new System.EventHandler(this.Btn_Search_Click);
-            // 
-            // Toolbar_Gists
-            // 
-            this.Toolbar_Gists.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Toolbar_Gists.AutoSize = false;
-            this.Toolbar_Gists.Dock = System.Windows.Forms.DockStyle.None;
-            this.Toolbar_Gists.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.Toolbar_Gists.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsLbl_Total,
-            this.TsBtn_Open,
-            this.TsBtn_ChangeDesc,
-            this.TsBtn_CopyUrl,
-            this.toolStripSeparator1,
-            this.TsBtn_Delete});
-            this.Toolbar_Gists.Location = new System.Drawing.Point(12, 88);
-            this.Toolbar_Gists.Name = "Toolbar_Gists";
-            this.Toolbar_Gists.Size = new System.Drawing.Size(400, 25);
-            this.Toolbar_Gists.TabIndex = 2;
-            // 
-            // TsLbl_Total
-            // 
-            this.TsLbl_Total.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.TsLbl_Total.Name = "TsLbl_Total";
-            this.TsLbl_Total.Size = new System.Drawing.Size(44, 22);
-            this.TsLbl_Total.Text = "Total: 0";
-            // 
-            // TsBtn_Open
-            // 
-            this.TsBtn_Open.Image = global::GistOne.Properties.Resources.book_open;
-            this.TsBtn_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsBtn_Open.Name = "TsBtn_Open";
-            this.TsBtn_Open.Size = new System.Drawing.Size(56, 22);
-            this.TsBtn_Open.Text = "&Open";
-            this.TsBtn_Open.Click += new System.EventHandler(this.TsBtn_Open_Click);
-            // 
-            // TsBtn_ChangeDesc
-            // 
-            this.TsBtn_ChangeDesc.Image = global::GistOne.Properties.Resources.textfield_rename;
-            this.TsBtn_ChangeDesc.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsBtn_ChangeDesc.Name = "TsBtn_ChangeDesc";
-            this.TsBtn_ChangeDesc.Size = new System.Drawing.Size(130, 22);
-            this.TsBtn_ChangeDesc.Text = "&Change description";
-            this.TsBtn_ChangeDesc.Visible = false;
-            this.TsBtn_ChangeDesc.Click += new System.EventHandler(this.TsBtn_ChangeDesc_Click);
-            // 
-            // TsBtn_CopyUrl
-            // 
-            this.TsBtn_CopyUrl.Image = global::GistOne.Properties.Resources.world;
-            this.TsBtn_CopyUrl.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsBtn_CopyUrl.Name = "TsBtn_CopyUrl";
-            this.TsBtn_CopyUrl.Size = new System.Drawing.Size(79, 22);
-            this.TsBtn_CopyUrl.Text = "Copy &URL";
-            this.TsBtn_CopyUrl.Click += new System.EventHandler(this.TsBtn_CopyUrl_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // TsBtn_Delete
-            // 
-            this.TsBtn_Delete.Image = global::GistOne.Properties.Resources.cross;
-            this.TsBtn_Delete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsBtn_Delete.Name = "TsBtn_Delete";
-            this.TsBtn_Delete.Size = new System.Drawing.Size(60, 22);
-            this.TsBtn_Delete.Text = "&Delete";
-            this.TsBtn_Delete.Click += new System.EventHandler(this.TsBtn_Delete_Click);
+            this.Lbl_GistID.BackColor = System.Drawing.Color.Goldenrod;
+            this.Lbl_GistID.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Lbl_GistID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Lbl_GistID.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Lbl_GistID.Location = new System.Drawing.Point(0, 0);
+            this.Lbl_GistID.Name = "Lbl_GistID";
+            this.Lbl_GistID.Size = new System.Drawing.Size(884, 30);
+            this.Lbl_GistID.TabIndex = 2;
+            this.Lbl_GistID.Text = "Gist ID";
+            this.Lbl_GistID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
@@ -205,7 +94,7 @@
             this.groupBox1.Location = new System.Drawing.Point(418, 88);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(454, 406);
-            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
             // 
@@ -261,7 +150,6 @@
             this.Lnk_Link.TabStop = true;
             this.Lnk_Link.Text = "Link";
             this.Lnk_Link.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Lnk_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Lnk_Link_LinkClicked);
             // 
             // label3
             // 
@@ -273,7 +161,7 @@
             this.label3.Location = new System.Drawing.Point(6, 257);
             this.label3.Name = "label3";
             this.label3.Padding = new System.Windows.Forms.Padding(19, 0, 0, 0);
-            this.label3.Size = new System.Drawing.Size(442, 25);
+            this.label3.Size = new System.Drawing.Size(696, 25);
             this.label3.TabIndex = 0;
             this.label3.Text = "Files:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -435,148 +323,80 @@
             this.label10.Text = "Description:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Dgw_Gists
+            // Txt_Search
             // 
-            this.Dgw_Gists.AllowUserToAddRows = false;
-            this.Dgw_Gists.AllowUserToDeleteRows = false;
-            this.Dgw_Gists.AllowUserToResizeColumns = false;
-            this.Dgw_Gists.AllowUserToResizeRows = false;
-            this.Dgw_Gists.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Txt_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Txt_Search.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Txt_Search.Location = new System.Drawing.Point(12, 43);
+            this.Txt_Search.Name = "Txt_Search";
+            this.Txt_Search.PlaceholderText = "Gist description...";
+            this.Txt_Search.Size = new System.Drawing.Size(698, 29);
+            this.Txt_Search.TabIndex = 5;
+            // 
+            // Rtb_Gist
+            // 
+            this.Rtb_Gist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Dgw_Gists.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Dgw_Gists.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.Dgw_Gists.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.Dgw_Gists.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.Dgw_Gists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Dgw_Gists.ColumnHeadersVisible = false;
-            this.Dgw_Gists.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DgwCol_ID,
-            this.DgwCol_Img,
-            this.DgwCol_Description,
-            this.DgwCol_User,
-            this.DgwCol_Created,
-            this.DgwCol_LastEdit,
-            this.DgwCol_URL});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dgw_Gists.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Dgw_Gists.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.Dgw_Gists.Location = new System.Drawing.Point(12, 116);
-            this.Dgw_Gists.MultiSelect = false;
-            this.Dgw_Gists.Name = "Dgw_Gists";
-            this.Dgw_Gists.ReadOnly = true;
-            this.Dgw_Gists.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.Dgw_Gists.RowHeadersVisible = false;
-            this.Dgw_Gists.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.Dgw_Gists.RowTemplate.Height = 50;
-            this.Dgw_Gists.RowTemplate.ReadOnly = true;
-            this.Dgw_Gists.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dgw_Gists.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgw_Gists.ShowEditingIcon = false;
-            this.Dgw_Gists.Size = new System.Drawing.Size(400, 378);
-            this.Dgw_Gists.TabIndex = 3;
-            this.Dgw_Gists.SelectionChanged += new System.EventHandler(this.Dgw_Gists_SelectionChanged);
+            this.Rtb_Gist.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Rtb_Gist.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Rtb_Gist.Location = new System.Drawing.Point(12, 88);
+            this.Rtb_Gist.Name = "Rtb_Gist";
+            this.Rtb_Gist.Size = new System.Drawing.Size(400, 406);
+            this.Rtb_Gist.TabIndex = 7;
+            this.Rtb_Gist.Text = "";
             // 
-            // DgwCol_ID
+            // Btn_Search
             // 
-            this.DgwCol_ID.Frozen = true;
-            this.DgwCol_ID.HeaderText = "";
-            this.DgwCol_ID.MaxInputLength = 256;
-            this.DgwCol_ID.Name = "DgwCol_ID";
-            this.DgwCol_ID.ReadOnly = true;
-            this.DgwCol_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_ID.Visible = false;
+            this.Btn_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Search.Image = global::GistOne.Properties.Resources.arrow_refresh16;
+            this.Btn_Search.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Search.Location = new System.Drawing.Point(716, 43);
+            this.Btn_Search.Name = "Btn_Search";
+            this.Btn_Search.Size = new System.Drawing.Size(75, 29);
+            this.Btn_Search.TabIndex = 8;
+            this.Btn_Search.Tag = "";
+            this.Btn_Search.Text = "&Save";
+            this.Btn_Search.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Search.UseVisualStyleBackColor = true;
             // 
-            // DgwCol_Img
+            // Btn_Close
             // 
-            this.DgwCol_Img.Frozen = true;
-            this.DgwCol_Img.HeaderText = "";
-            this.DgwCol_Img.MinimumWidth = 45;
-            this.DgwCol_Img.Name = "DgwCol_Img";
-            this.DgwCol_Img.ReadOnly = true;
-            this.DgwCol_Img.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_Img.Width = 45;
+            this.Btn_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Close.Image = global::GistOne.Properties.Resources._lock;
+            this.Btn_Close.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Close.Location = new System.Drawing.Point(797, 43);
+            this.Btn_Close.Name = "Btn_Close";
+            this.Btn_Close.Size = new System.Drawing.Size(75, 29);
+            this.Btn_Close.TabIndex = 8;
+            this.Btn_Close.Tag = "";
+            this.Btn_Close.Text = "&Close";
+            this.Btn_Close.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Close.UseVisualStyleBackColor = true;
+            this.Btn_Close.Click += new System.EventHandler(this.Btn_Close_Click);
             // 
-            // DgwCol_Description
-            // 
-            this.DgwCol_Description.Frozen = true;
-            this.DgwCol_Description.HeaderText = "";
-            this.DgwCol_Description.Name = "DgwCol_Description";
-            this.DgwCol_Description.ReadOnly = true;
-            this.DgwCol_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // DgwCol_User
-            // 
-            this.DgwCol_User.Frozen = true;
-            this.DgwCol_User.HeaderText = "";
-            this.DgwCol_User.MaxInputLength = 500;
-            this.DgwCol_User.Name = "DgwCol_User";
-            this.DgwCol_User.ReadOnly = true;
-            this.DgwCol_User.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_User.Visible = false;
-            // 
-            // DgwCol_Created
-            // 
-            this.DgwCol_Created.Frozen = true;
-            this.DgwCol_Created.HeaderText = "";
-            this.DgwCol_Created.MaxInputLength = 500;
-            this.DgwCol_Created.Name = "DgwCol_Created";
-            this.DgwCol_Created.ReadOnly = true;
-            this.DgwCol_Created.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_Created.Visible = false;
-            // 
-            // DgwCol_LastEdit
-            // 
-            this.DgwCol_LastEdit.Frozen = true;
-            this.DgwCol_LastEdit.HeaderText = "";
-            this.DgwCol_LastEdit.MaxInputLength = 500;
-            this.DgwCol_LastEdit.Name = "DgwCol_LastEdit";
-            this.DgwCol_LastEdit.ReadOnly = true;
-            this.DgwCol_LastEdit.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_LastEdit.Visible = false;
-            // 
-            // DgwCol_URL
-            // 
-            this.DgwCol_URL.Frozen = true;
-            this.DgwCol_URL.HeaderText = "";
-            this.DgwCol_URL.Name = "DgwCol_URL";
-            this.DgwCol_URL.ReadOnly = true;
-            this.DgwCol_URL.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_URL.Visible = false;
-            // 
-            // MyGists
+            // OpenGist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(884, 506);
-            this.Controls.Add(this.Dgw_Gists);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Toolbar_Gists);
+            this.Controls.Add(this.Btn_Close);
             this.Controls.Add(this.Btn_Search);
+            this.Controls.Add(this.Rtb_Gist);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Txt_Search);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Lbl_GistID);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "MyGists";
+            this.Name = "OpenGist";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "MyGists";
-            this.Load += new System.EventHandler(this.MyGists_Load);
-            this.Shown += new System.EventHandler(this.MyGists_Shown);
-            this.Resize += new System.EventHandler(this.MyGists_Resize);
-            this.StyleChanged += new System.EventHandler(this.MyGists_StyleChanged);
-            this.Toolbar_Gists.ResumeLayout(false);
-            this.Toolbar_Gists.PerformLayout();
+            this.Text = "OpenGist";
+            this.Load += new System.EventHandler(this.OpenGist_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Dgw_Gists)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -584,44 +404,31 @@
 
         #endregion
 
-        private Label label1;
-        private TextBox Txt_Search;
-        private Button Btn_Search;
-        private ToolStrip Toolbar_Gists;
+        private Label Lbl_GistID;
         private GroupBox groupBox1;
-        private TextBox Txt_Description;
-        private Label Lbl_LastEdit;
-        private Label Lbl_Created;
         private ListView Lsv_Files;
         private ColumnHeader Col_Files_Name;
-        private ImageLabel label3;
         private ColumnHeader Col_Files_Size;
         private ColumnHeader Col_Files_Lang;
         private ColumnHeader Col_Files_Type;
-        private Label Lbl_Comments;
-        private Label Lbl_Visibility;
         private LinkLabel Lnk_Link;
-        private TextBox Txt_ID;
-        private DataGridView Dgw_Gists;
+        private ImageLabel label3;
         private ImageLabel label9;
-        private ImageLabel label10;
-        private ImageLabel label11;
-        private ImageLabel label12;
-        private ImageLabel label13;
-        private ImageLabel label14;
         private ImageLabel label15;
-        private ToolStripLabel TsLbl_Total;
-        private ToolStripButton TsBtn_Open;
-        private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton TsBtn_Delete;
-        private ToolStripButton TsBtn_ChangeDesc;
-        private ToolStripButton TsBtn_CopyUrl;
-        private DataGridViewTextBoxColumn DgwCol_ID;
-        private DataGridViewImageColumn DgwCol_Img;
-        private DataGridViewTextBoxColumn DgwCol_Description;
-        private DataGridViewTextBoxColumn DgwCol_User;
-        private DataGridViewTextBoxColumn DgwCol_Created;
-        private DataGridViewTextBoxColumn DgwCol_LastEdit;
-        private DataGridViewLinkColumn DgwCol_URL;
+        private Label Lbl_Comments;
+        private TextBox Txt_Description;
+        private ImageLabel label14;
+        private TextBox Txt_ID;
+        private Label Lbl_LastEdit;
+        private ImageLabel label13;
+        private ImageLabel label12;
+        private Label Lbl_Visibility;
+        private Label Lbl_Created;
+        private ImageLabel label11;
+        private ImageLabel label10;
+        private TextBox Txt_Search;
+        private RichTextBox Rtb_Gist;
+        private Button Btn_Search;
+        private Button Btn_Close;
     }
 }

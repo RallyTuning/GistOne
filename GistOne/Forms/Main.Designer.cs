@@ -32,6 +32,7 @@
             this.TsBtn_Home = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.TsBtn_MyGists = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.TsBtn_Create = new System.Windows.Forms.ToolStripButton();
             this.TsBtn_Settings = new System.Windows.Forms.ToolStripButton();
             this.TsBtn_About = new System.Windows.Forms.ToolStripButton();
@@ -47,6 +48,7 @@
             this.TsBtn_Home,
             this.toolStripSeparator1,
             this.TsBtn_MyGists,
+            this.toolStripButton1,
             this.TsBtn_Create,
             this.TsBtn_Settings,
             this.TsBtn_About});
@@ -83,6 +85,16 @@
             this.TsBtn_MyGists.Text = "&My Gists";
             this.TsBtn_MyGists.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.TsBtn_MyGists.Click += new System.EventHandler(this.TsBtn_Browse_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::GistOne.Properties.Resources.info_rhombus;
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(62, 52);
+            this.toolStripButton1.Text = "&Opened";
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // TsBtn_Create
             // 
@@ -150,10 +162,11 @@
         private ToolStrip Ts_Top;
         private ToolStripButton TsBtn_Home;
         private ToolStripSeparator toolStripSeparator1;
-        private Panel panel1;
         private ToolStripButton TsBtn_MyGists;
         private ToolStripButton TsBtn_Settings;
         private ToolStripButton TsBtn_About;
         private ToolStripButton TsBtn_Create;
+        private ToolStripDropDownButton toolStripButton1;
+        public Panel panel1;
     }
 }

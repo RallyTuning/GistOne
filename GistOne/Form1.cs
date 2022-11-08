@@ -52,7 +52,7 @@ namespace GistOne
 
                 while (true)
                 {
-                    GistNet.Browse TheGist = new(tmptoken, "RallyTuning", 100, CurPage);
+                    GistNet.MyGists TheGist = new(tmptoken, 100, CurPage);
                     string jsonString = await TheGist.GetAll();
 
                     if (string.IsNullOrWhiteSpace(jsonString)) { throw new Exception("Json is empty"); }
