@@ -12,6 +12,7 @@
     <Reference Include="GistNet">
       <HintPath>..\..\GistNet\GistNet\bin\Debug\net6.0\GistNet.dll</HintPath>
       <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
 

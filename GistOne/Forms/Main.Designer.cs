@@ -32,7 +32,7 @@
             this.TsBtn_Home = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.TsBtn_MyGists = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.TsBtn_Opened = new System.Windows.Forms.ToolStripDropDownButton();
             this.TsBtn_Create = new System.Windows.Forms.ToolStripButton();
             this.TsBtn_Settings = new System.Windows.Forms.ToolStripButton();
             this.TsBtn_About = new System.Windows.Forms.ToolStripButton();
@@ -48,7 +48,7 @@
             this.TsBtn_Home,
             this.toolStripSeparator1,
             this.TsBtn_MyGists,
-            this.toolStripButton1,
+            this.TsBtn_Opened,
             this.TsBtn_Create,
             this.TsBtn_Settings,
             this.TsBtn_About});
@@ -86,15 +86,17 @@
             this.TsBtn_MyGists.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.TsBtn_MyGists.Click += new System.EventHandler(this.TsBtn_Browse_Click);
             // 
-            // toolStripButton1
+            // TsBtn_Opened
             // 
-            this.toolStripButton1.Image = global::GistOne.Properties.Resources.info_rhombus;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(62, 52);
-            this.toolStripButton1.Text = "&Opened";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TsBtn_Opened.Image = global::GistOne.Properties.Resources.inbox_empty;
+            this.TsBtn_Opened.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.TsBtn_Opened.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TsBtn_Opened.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TsBtn_Opened.Name = "TsBtn_Opened";
+            this.TsBtn_Opened.Size = new System.Drawing.Size(62, 52);
+            this.TsBtn_Opened.Text = "&Opened";
+            this.TsBtn_Opened.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TsBtn_Opened.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.TsBtn_Opened_DropDownItemClicked);
             // 
             // TsBtn_Create
             // 
@@ -166,7 +168,7 @@
         private ToolStripButton TsBtn_Settings;
         private ToolStripButton TsBtn_About;
         private ToolStripButton TsBtn_Create;
-        private ToolStripDropDownButton toolStripButton1;
-        public Panel panel1;
+        internal ToolStripDropDownButton TsBtn_Opened;
+        internal Panel panel1;
     }
 }

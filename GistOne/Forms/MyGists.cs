@@ -194,7 +194,9 @@ namespace GistOne.Forms
 
                 //Process.Start(new ProcessStartInfo(TmpLnk.Tag.ToString()!) { UseShellExecute = true });
 
-                Process.Start(new ProcessStartInfo(Lnk_Link.Text) { UseShellExecute = true });
+                string URL = Lnk_Link.Text ?? "";
+                if (string.IsNullOrWhiteSpace(URL)) { return; }
+                Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -218,8 +220,8 @@ namespace GistOne.Forms
                     Lbl_Visibility.Text = G.Public ? "Public" : "Private";
                     Lbl_Visibility.ForeColor = G.Public ? Color.ForestGreen : Color.Firebrick;
 
-                    Lbl_Created.Text = G.Created_At.ToString();
-                    Lbl_LastEdit.Text = G.Updated_At.ToString();
+                    Lbl_Created.Text = G.Created_At.ToLongDateString() + " @ " + G.Created_At.ToLongTimeString();
+                    Lbl_LastEdit.Text = G.Updated_At.ToLongDateString() + " @ " + G.Updated_At.ToLongTimeString();
                     Lbl_Comments.Text = G.Comments.ToString();
                     Lnk_Link.Text = G.HTML_URL;
 
@@ -259,17 +261,7 @@ namespace GistOne.Forms
         {
             try
             {
-                if (Dgw_Gists.SelectedRows.Count < 1) { MessageBox.Show("No gist selected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-                string GID = Dgw_Gists.SelectedRows[0].Cells[DgwCol_ID.Index].Value.ToString() ?? "";
-
-                OpenGist OG = new(GID);
-                OG.Name = GID;
-                OG.Text = GID;
-                OG.TopLevel = false;         // First
-                Functions.LoadOneForms(OG); // Then
-                OG.Dock = DockStyle.Fill;  // Finally
-
-                Functions.ParseForm(GID,false);
+                OpenGist();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -336,5 +328,39 @@ namespace GistOne.Forms
 
 
         #endregion
+
+        private void OpenGist()
+        {
+            if (Dgw_Gists.SelectedRows.Count < 1) { return; }
+
+            string GDesc = Dgw_Gists.SelectedRows[0].Cells[DgwCol_Description.Index].Value.ToString() ?? "";
+            string GID = Dgw_Gists.SelectedRows[0].Cells[DgwCol_ID.Index].Value.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(GID)) { return; }
+
+            OpenGist OG = new(GID)
+            {
+                Name = GID,
+                Text = string.IsNullOrWhiteSpace(GDesc) ? GID : GDesc,
+                TopLevel = false          // First
+            };                           //
+            Functions.LoadOneForms(OG); // Then
+            OG.Dock = DockStyle.Fill;  // Finally
+
+            Functions.ParseForm(GID, Functions.Action.Open);
+
+            Functions.AddEntryOpened(GDesc, GID);
+
+            Dgw_Gists.ClearSelection();
+            ClearCntls();
+        }
+
+        private void Dgw_Gists_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenGist();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
     }
 }

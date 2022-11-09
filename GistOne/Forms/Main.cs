@@ -19,7 +19,7 @@
                 Functions.ReadSettings();
 
                 Functions.LoadAllForms();
-                Functions.ParseForm("Home",false);
+                Functions.ParseForm("Home", Functions.Action.Open);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -40,6 +40,18 @@
             try
             {
                 OpenForm((ToolStripButton)sender);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void TsBtn_Opened_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            try
+            {
+                string Name = e.ClickedItem.Tag.ToString() ?? "";
+                if (string.IsNullOrWhiteSpace(Name)) { return; }
+
+                Functions.ParseForm(Name, Functions.Action.Open);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -78,15 +90,20 @@
         #region Voids
 
 
-        private void OpenForm(ToolStripButton TSBTN)
+        private static void OpenForm(ToolStripButton TSBTN)
         {
-            Functions.ParseForm(TSBTN.Name.Split("_").Last<string>(),false);
+            string Name = TSBTN.Name.Split("_").Last<string>();
+            if (string.IsNullOrWhiteSpace(Name)) { return; }
+
+            Functions.ParseForm(Name, Functions.Action.Open);
         }
+
 
 
 
 
         #endregion
 
+        
     }
 }

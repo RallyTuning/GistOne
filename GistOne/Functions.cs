@@ -64,7 +64,7 @@ namespace GistOne
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-       internal static Main FM;
+        internal static Main? FM;
 
         internal static void LoadAllForms()
         {
@@ -76,26 +76,33 @@ namespace GistOne
             }
         }
 
-        internal static void LoadOneForms( Form F)
+        internal static void LoadOneForms(Form F)
         {
+            if (FM == null) { return; }
+
             F.TopLevel = false;         // First
             FM.panel1.Controls.Add(F); // Then
             F.Dock = DockStyle.Fill;  // Finally
         }
 
-        internal static void ParseForm( string Name, bool Close)
+        internal enum Action { Open, Close }
+
+        internal static void ParseForm(string Name, Action Act)
         {
+            if (FM == null) { return; }
+
             Panel P = FM.panel1;
 
             P.SuspendLayout();
             foreach (Form F in P.Controls.OfType<Form>())
             {
-                if (Close)
+                if (Act == Action.Close)
                 {
                     if (F.Name == Name)
-                    { 
-                        F.Dispose(); 
+                    {
+                        F.Dispose();
                         P.Controls.Remove(F);
+                        RemoveEntryOpened(Name);
                         break;
                     }
                 }
@@ -108,6 +115,33 @@ namespace GistOne
                 }
             }
             P.ResumeLayout();
+        }
+
+        internal static void AddEntryOpened(string Name, string ID)
+        {
+            if (FM == null) { return; }
+
+            ToolStripDropDownButton OpenedMenu = FM.TsBtn_Opened;
+
+            ToolStripButton NewBtn = new(string.IsNullOrWhiteSpace(Name) ? ID : Name, Properties.Resources.barcode_2d) { Tag = ID };
+
+            OpenedMenu.DropDownItems.Add(NewBtn);
+
+            OpenedMenu.Image = Properties.Resources.inbox_document_text;
+        }
+
+        internal static void RemoveEntryOpened(string ID)
+        {
+            if (FM == null) { return; }
+
+            ToolStripDropDownButton OpenedMenu = FM.TsBtn_Opened;
+
+            foreach (ToolStripButton B in OpenedMenu.DropDownItems)
+            {
+                if (B.Tag.ToString() == ID) { OpenedMenu.DropDownItems.Remove(B); break; }
+            }
+
+            OpenedMenu.Image = OpenedMenu.DropDownItems.Count == 0 ? Properties.Resources.inbox_empty : Properties.Resources.inbox_document_text;
         }
 
     }

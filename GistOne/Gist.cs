@@ -263,44 +263,6 @@ namespace GistOne
         public bool Site_Admin { get; set; }
     }
 
-    /// <summary>History of Gist changes</summary>
-    public class History
-    {
-        [JsonPropertyName("user")]
-        public User User { get; set; } = new();
-
-        [JsonPropertyName("version")]
-        public string Version { get; set; } = string.Empty;
-
-        [JsonPropertyName("committed_at")]
-        public DateTime Committed_At { get; set; }
-
-        [JsonPropertyName("change_status")]
-        public Change_Status Change_Status { get; set; } = new();
-
-        [JsonPropertyName("url")]
-        public string URL { get; set; } = string.Empty;
-    }
-
-    /// <summary>Forks of the Gist</summary>
-    public class Forks
-    {
-        [JsonPropertyName("url")]
-        public string URL { get; set; } = string.Empty;
-
-        [JsonPropertyName("user")]
-        public User User { get; set; } = new();
-
-        [JsonPropertyName("id")]
-        public string ID { get; set; } = string.Empty;
-
-        [JsonPropertyName("created_at")]
-        public DateTime Created_At { get; set; }
-
-        [JsonPropertyName("updated_at")]
-        public DateTime Updated_At { get; set; }
-    }
-
     /// <summary>Gist forked from</summary>
     public class Fork_Of
     {
@@ -355,6 +317,44 @@ namespace GistOne
 
         [JsonPropertyName("owner")]
         public Owner Owner { get; set; } = new();
+    }
+
+    /// <summary>Forks of the Gist</summary>
+    public class Forks
+    {
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
+
+        [JsonPropertyName("user")]
+        public User User { get; set; } = new();
+
+        [JsonPropertyName("id")]
+        public string ID { get; set; } = string.Empty;
+
+        [JsonPropertyName("created_at")]
+        public DateTime Created_At { get; set; }
+
+        [JsonPropertyName("updated_at")]
+        public DateTime Updated_At { get; set; }
+    }
+
+    /// <summary>History of Gist changes</summary>
+    public class History
+    {
+        [JsonPropertyName("user")]
+        public User User { get; set; } = new();
+
+        [JsonPropertyName("version")]
+        public string Version { get; set; } = string.Empty;
+
+        [JsonPropertyName("committed_at")]
+        public DateTime Committed_At { get; set; }
+
+        [JsonPropertyName("change_status")]
+        public Change_Status Change_Status { get; set; } = new();
+
+        [JsonPropertyName("url")]
+        public string URL { get; set; } = string.Empty;
     }
 
     /// <summary>Status changes of History class</summary>

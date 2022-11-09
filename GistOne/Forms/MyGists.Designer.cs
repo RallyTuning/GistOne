@@ -94,18 +94,19 @@
             this.Txt_Search.Location = new System.Drawing.Point(12, 43);
             this.Txt_Search.Name = "Txt_Search";
             this.Txt_Search.PlaceholderText = "Search a Gist...";
-            this.Txt_Search.Size = new System.Drawing.Size(779, 29);
+            this.Txt_Search.Size = new System.Drawing.Size(774, 29);
             this.Txt_Search.TabIndex = 0;
             this.Txt_Search.TextChanged += new System.EventHandler(this.Txt_Search_TextChanged);
             // 
             // Btn_Search
             // 
             this.Btn_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Search.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Btn_Search.Image = global::GistOne.Properties.Resources.arrow_refresh16;
             this.Btn_Search.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_Search.Location = new System.Drawing.Point(797, 43);
+            this.Btn_Search.Location = new System.Drawing.Point(792, 43);
             this.Btn_Search.Name = "Btn_Search";
-            this.Btn_Search.Size = new System.Drawing.Size(75, 29);
+            this.Btn_Search.Size = new System.Drawing.Size(80, 29);
             this.Btn_Search.TabIndex = 1;
             this.Btn_Search.Tag = "";
             this.Btn_Search.Text = "&Refresh";
@@ -482,6 +483,7 @@
             this.Dgw_Gists.Size = new System.Drawing.Size(400, 378);
             this.Dgw_Gists.TabIndex = 3;
             this.Dgw_Gists.SelectionChanged += new System.EventHandler(this.Dgw_Gists_SelectionChanged);
+            this.Dgw_Gists.DoubleClick += new System.EventHandler(this.Dgw_Gists_DoubleClick);
             // 
             // DgwCol_ID
             // 
