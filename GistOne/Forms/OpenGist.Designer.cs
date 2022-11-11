@@ -51,38 +51,34 @@
             this.Toolbar_Files = new System.Windows.Forms.ToolStrip();
             this.TsBtn_Files_Add = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.TsBtn_Files_Save = new System.Windows.Forms.ToolStripButton();
             this.TsBtn_Files_Delete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.TsBtn_Files_Save = new System.Windows.Forms.ToolStripButton();
+            this.TsBtn_Files_Cancel = new System.Windows.Forms.ToolStripButton();
             this.Tab_Versions = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.Lsv_Versions = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Tab_Forks = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.Lsv_Forks = new System.Windows.Forms.ListView();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.Tab_Comments = new System.Windows.Forms.TabPage();
-            this.listView3 = new System.Windows.Forms.ListView();
-            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.imageLabel1 = new GistOne.ImageLabel();
             this.Lnk_Forked = new System.Windows.Forms.LinkLabel();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.TsBtn_Forks_OpenOnline = new System.Windows.Forms.ToolStripButton();
+            this.TsBtn_Versions_OpenOnline = new System.Windows.Forms.ToolStripButton();
             this.TabCont_Gist.SuspendLayout();
             this.Tab_Files.SuspendLayout();
             this.Toolbar_Files.SuspendLayout();
             this.Tab_Versions.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.Tab_Forks.SuspendLayout();
-            this.Tab_Comments.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_GistID
@@ -138,7 +134,7 @@
             // Col_Files_Type
             // 
             this.Col_Files_Type.Text = "Type";
-            this.Col_Files_Type.Width = 95;
+            this.Col_Files_Type.Width = 90;
             // 
             // label9
             // 
@@ -300,6 +296,7 @@
             this.TabCont_Gist.Controls.Add(this.Tab_Versions);
             this.TabCont_Gist.Controls.Add(this.Tab_Forks);
             this.TabCont_Gist.Controls.Add(this.Tab_Comments);
+            this.TabCont_Gist.ItemSize = new System.Drawing.Size(100, 20);
             this.TabCont_Gist.Location = new System.Drawing.Point(12, 251);
             this.TabCont_Gist.Name = "TabCont_Gist";
             this.TabCont_Gist.SelectedIndex = 0;
@@ -328,7 +325,8 @@
             this.toolStripSeparator1,
             this.TsBtn_Files_Delete,
             this.toolStripSeparator2,
-            this.TsBtn_Files_Save});
+            this.TsBtn_Files_Save,
+            this.TsBtn_Files_Cancel});
             this.Toolbar_Files.Location = new System.Drawing.Point(3, 3);
             this.Toolbar_Files.Name = "Toolbar_Files";
             this.Toolbar_Files.Size = new System.Drawing.Size(440, 25);
@@ -348,16 +346,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // TsBtn_Files_Save
-            // 
-            this.TsBtn_Files_Save.Image = global::GistOne.Properties.Resources.diskette;
-            this.TsBtn_Files_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsBtn_Files_Save.Name = "TsBtn_Files_Save";
-            this.TsBtn_Files_Save.Size = new System.Drawing.Size(51, 22);
-            this.TsBtn_Files_Save.Text = "&Save";
-            this.TsBtn_Files_Save.Visible = false;
-            this.TsBtn_Files_Save.Click += new System.EventHandler(this.TsBtn_Files_Save_Click);
-            // 
             // TsBtn_Files_Delete
             // 
             this.TsBtn_Files_Delete.Image = global::GistOne.Properties.Resources.delete;
@@ -367,9 +355,35 @@
             this.TsBtn_Files_Delete.Text = "&Delete file(s)";
             this.TsBtn_Files_Delete.Click += new System.EventHandler(this.TsBtn_Files_Delete_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Visible = false;
+            // 
+            // TsBtn_Files_Save
+            // 
+            this.TsBtn_Files_Save.Image = global::GistOne.Properties.Resources.diskette;
+            this.TsBtn_Files_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TsBtn_Files_Save.Name = "TsBtn_Files_Save";
+            this.TsBtn_Files_Save.Size = new System.Drawing.Size(98, 22);
+            this.TsBtn_Files_Save.Text = "&Save changes";
+            this.TsBtn_Files_Save.Visible = false;
+            this.TsBtn_Files_Save.Click += new System.EventHandler(this.TsBtn_Files_Save_Click);
+            // 
+            // TsBtn_Files_Cancel
+            // 
+            this.TsBtn_Files_Cancel.Image = global::GistOne.Properties.Resources.cross;
+            this.TsBtn_Files_Cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TsBtn_Files_Cancel.Name = "TsBtn_Files_Cancel";
+            this.TsBtn_Files_Cancel.Size = new System.Drawing.Size(113, 22);
+            this.TsBtn_Files_Cancel.Text = "Dis&card changes";
+            this.TsBtn_Files_Cancel.Visible = false;
+            this.TsBtn_Files_Cancel.Click += new System.EventHandler(this.TsBtn_Files_Cancel_Click);
+            // 
             // Tab_Versions
             // 
-            this.Tab_Versions.Controls.Add(this.listView1);
+            this.Tab_Versions.Controls.Add(this.Lsv_Versions);
             this.Tab_Versions.Controls.Add(this.toolStrip1);
             this.Tab_Versions.Location = new System.Drawing.Point(4, 24);
             this.Tab_Versions.Name = "Tab_Versions";
@@ -380,48 +394,47 @@
             this.Tab_Versions.ToolTipText = "Versions/Commits of the Gist";
             this.Tab_Versions.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // Lsv_Versions
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Lsv_Versions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(3, 28);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(440, 184);
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.columnHeader3});
+            this.Lsv_Versions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Lsv_Versions.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Lsv_Versions.FullRowSelect = true;
+            this.Lsv_Versions.GridLines = true;
+            this.Lsv_Versions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.Lsv_Versions.Location = new System.Drawing.Point(3, 28);
+            this.Lsv_Versions.MultiSelect = false;
+            this.Lsv_Versions.Name = "Lsv_Versions";
+            this.Lsv_Versions.Size = new System.Drawing.Size(440, 184);
+            this.Lsv_Versions.TabIndex = 4;
+            this.Lsv_Versions.UseCompatibleStateImageBehavior = false;
+            this.Lsv_Versions.View = System.Windows.Forms.View.Details;
+            this.Lsv_Versions.DoubleClick += new System.EventHandler(this.Versions_OpenOnline_Click);
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 180;
+            this.columnHeader1.Text = "Username";
+            this.columnHeader1.Width = 150;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Size";
+            this.columnHeader2.Text = "Datetime";
+            this.columnHeader2.Width = 140;
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Language";
-            this.columnHeader3.Width = 80;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Type";
-            this.columnHeader4.Width = 95;
+            this.columnHeader3.Text = "Changes";
+            this.columnHeader3.Width = 120;
             // 
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TsBtn_Versions_OpenOnline});
             this.toolStrip1.Location = new System.Drawing.Point(3, 3);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(440, 25);
@@ -429,7 +442,7 @@
             // 
             // Tab_Forks
             // 
-            this.Tab_Forks.Controls.Add(this.listView2);
+            this.Tab_Forks.Controls.Add(this.Lsv_Forks);
             this.Tab_Forks.Controls.Add(this.toolStrip2);
             this.Tab_Forks.Location = new System.Drawing.Point(4, 24);
             this.Tab_Forks.Name = "Tab_Forks";
@@ -440,48 +453,47 @@
             this.Tab_Forks.ToolTipText = "Forks of the Gist";
             this.Tab_Forks.UseVisualStyleBackColor = true;
             // 
-            // listView2
+            // Lsv_Forks
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Lsv_Forks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader5,
             this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8});
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView2.Location = new System.Drawing.Point(3, 28);
-            this.listView2.MultiSelect = false;
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(440, 184);
-            this.listView2.TabIndex = 4;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.columnHeader7});
+            this.Lsv_Forks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Lsv_Forks.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Lsv_Forks.FullRowSelect = true;
+            this.Lsv_Forks.GridLines = true;
+            this.Lsv_Forks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.Lsv_Forks.Location = new System.Drawing.Point(3, 28);
+            this.Lsv_Forks.MultiSelect = false;
+            this.Lsv_Forks.Name = "Lsv_Forks";
+            this.Lsv_Forks.Size = new System.Drawing.Size(440, 184);
+            this.Lsv_Forks.TabIndex = 4;
+            this.Lsv_Forks.UseCompatibleStateImageBehavior = false;
+            this.Lsv_Forks.View = System.Windows.Forms.View.Details;
+            this.Lsv_Forks.DoubleClick += new System.EventHandler(this.Forks_OpenOnline_Click);
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Name";
-            this.columnHeader5.Width = 180;
+            this.columnHeader5.Text = "Username";
+            this.columnHeader5.Width = 130;
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "Size";
+            this.columnHeader6.Text = "Forked date";
+            this.columnHeader6.Width = 140;
             // 
             // columnHeader7
             // 
-            this.columnHeader7.Text = "Language";
-            this.columnHeader7.Width = 80;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Type";
-            this.columnHeader8.Width = 95;
+            this.columnHeader7.Text = "Last update";
+            this.columnHeader7.Width = 140;
             // 
             // toolStrip2
             // 
             this.toolStrip2.AutoSize = false;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TsBtn_Forks_OpenOnline});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(440, 25);
@@ -489,8 +501,6 @@
             // 
             // Tab_Comments
             // 
-            this.Tab_Comments.Controls.Add(this.listView3);
-            this.Tab_Comments.Controls.Add(this.toolStrip3);
             this.Tab_Comments.Location = new System.Drawing.Point(4, 24);
             this.Tab_Comments.Name = "Tab_Comments";
             this.Tab_Comments.Padding = new System.Windows.Forms.Padding(3);
@@ -499,53 +509,6 @@
             this.Tab_Comments.Text = "Comments";
             this.Tab_Comments.ToolTipText = "Comments of the Gist";
             this.Tab_Comments.UseVisualStyleBackColor = true;
-            // 
-            // listView3
-            // 
-            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12});
-            this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listView3.FullRowSelect = true;
-            this.listView3.GridLines = true;
-            this.listView3.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView3.Location = new System.Drawing.Point(3, 28);
-            this.listView3.MultiSelect = false;
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(440, 184);
-            this.listView3.TabIndex = 4;
-            this.listView3.UseCompatibleStateImageBehavior = false;
-            this.listView3.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Name";
-            this.columnHeader9.Width = 180;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "Size";
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "Language";
-            this.columnHeader11.Width = 80;
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.Text = "Type";
-            this.columnHeader12.Width = 95;
-            // 
-            // toolStrip3
-            // 
-            this.toolStrip3.AutoSize = false;
-            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(440, 25);
-            this.toolStrip3.TabIndex = 5;
             // 
             // imageLabel1
             // 
@@ -574,11 +537,23 @@
             this.Lnk_Forked.Visible = false;
             this.Lnk_Forked.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Lnk_Forked_LinkClicked);
             // 
-            // toolStripSeparator2
+            // TsBtn_Forks_OpenOnline
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            this.toolStripSeparator2.Visible = false;
+            this.TsBtn_Forks_OpenOnline.Image = global::GistOne.Properties.Resources.world;
+            this.TsBtn_Forks_OpenOnline.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TsBtn_Forks_OpenOnline.Name = "TsBtn_Forks_OpenOnline";
+            this.TsBtn_Forks_OpenOnline.Size = new System.Drawing.Size(92, 22);
+            this.TsBtn_Forks_OpenOnline.Text = "&Open online";
+            this.TsBtn_Forks_OpenOnline.Click += new System.EventHandler(this.Forks_OpenOnline_Click);
+            // 
+            // TsBtn_Versions_OpenOnline
+            // 
+            this.TsBtn_Versions_OpenOnline.Image = global::GistOne.Properties.Resources.world;
+            this.TsBtn_Versions_OpenOnline.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TsBtn_Versions_OpenOnline.Name = "TsBtn_Versions_OpenOnline";
+            this.TsBtn_Versions_OpenOnline.Size = new System.Drawing.Size(92, 22);
+            this.TsBtn_Versions_OpenOnline.Text = "&Open online";
+            this.TsBtn_Versions_OpenOnline.Click += new System.EventHandler(this.Versions_OpenOnline_Click);
             // 
             // OpenGist
             // 
@@ -615,8 +590,11 @@
             this.Toolbar_Files.ResumeLayout(false);
             this.Toolbar_Files.PerformLayout();
             this.Tab_Versions.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.Tab_Forks.ResumeLayout(false);
-            this.Tab_Comments.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -650,28 +628,23 @@
         private TabPage Tab_Comments;
         private ImageLabel imageLabel1;
         private LinkLabel Lnk_Forked;
-        private ListView listView1;
+        private ListView Lsv_Versions;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
         private ToolStrip toolStrip1;
-        private ListView listView2;
+        private ListView Lsv_Forks;
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
         private ColumnHeader columnHeader7;
-        private ColumnHeader columnHeader8;
         private ToolStrip toolStrip2;
-        private ListView listView3;
-        private ColumnHeader columnHeader9;
-        private ColumnHeader columnHeader10;
-        private ColumnHeader columnHeader11;
-        private ColumnHeader columnHeader12;
-        private ToolStrip toolStrip3;
         private ToolStripButton TsBtn_Files_Save;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton TsBtn_Files_Add;
         private ToolStripButton TsBtn_Files_Delete;
         private ToolStripSeparator toolStripSeparator2;
+        private ToolStripButton TsBtn_Files_Cancel;
+        private ToolStripButton TsBtn_Versions_OpenOnline;
+        private ToolStripButton TsBtn_Forks_OpenOnline;
     }
 }

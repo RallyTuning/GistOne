@@ -1,4 +1,5 @@
 ﻿using GistOne.Forms;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace GistOne
@@ -123,11 +124,16 @@ namespace GistOne
 
             ToolStripDropDownButton OpenedMenu = FM.TsBtn_Opened;
 
-            ToolStripButton NewBtn = new(string.IsNullOrWhiteSpace(Name) ? ID : Name, Properties.Resources.barcode_2d) { Tag = ID };
+            ToolStripMenuItem NewBtn = new(string.IsNullOrWhiteSpace(Name) ? ID : Name)
+            {
+                Image = Properties.Resources.barcode_2d,
+                Tag = ID,
+                AutoSize = true
+            };
 
             OpenedMenu.DropDownItems.Add(NewBtn);
-
             OpenedMenu.Image = Properties.Resources.inbox_document_text;
+            //NewBtn.Width = TextRenderer.MeasureText(NewBtn.Text, NewBtn.Font).Width;
         }
 
         internal static void RemoveEntryOpened(string ID)
@@ -136,7 +142,7 @@ namespace GistOne
 
             ToolStripDropDownButton OpenedMenu = FM.TsBtn_Opened;
 
-            foreach (ToolStripButton B in OpenedMenu.DropDownItems)
+            foreach (ToolStripMenuItem B in OpenedMenu.DropDownItems)
             {
                 if (B.Tag.ToString() == ID) { OpenedMenu.DropDownItems.Remove(B); break; }
             }
@@ -144,5 +150,10 @@ namespace GistOne
             OpenedMenu.Image = OpenedMenu.DropDownItems.Count == 0 ? Properties.Resources.inbox_empty : Properties.Resources.inbox_document_text;
         }
 
+        internal static void NavigateToURL(string URL)
+        {
+            if (string.IsNullOrWhiteSpace(URL)) { return; }
+            Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+        }
     }
 }
