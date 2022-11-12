@@ -189,12 +189,6 @@ namespace GistOne.Forms
         {
             try
             {
-                //LinkLabel TmpLnk = (LinkLabel)sender;
-                //if (TmpLnk is null || TmpLnk.Tag is null) { return; }
-
-                //Process.Start(new ProcessStartInfo(TmpLnk.Tag.ToString()!) { UseShellExecute = true });
-                //string URL = Lnk_Link.Text ?? "";
-                
                 Functions.NavigateToURL(Lnk_Link.Text);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }

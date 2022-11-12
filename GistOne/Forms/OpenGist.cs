@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace GistOne.Forms
 {
@@ -59,7 +58,6 @@ namespace GistOne.Forms
             ImageList ImgFor = new() { ColorDepth = ColorDepth.Depth24Bit };
             ImgFor.Images.AddRange(new Image[] { Properties.Resources.node });
             Lsv_Forks.SmallImageList = ImgFor;
-
         }
 
         private void OpenGist_Load(object sender, EventArgs e)
@@ -164,6 +162,7 @@ namespace GistOne.Forms
             try
             {
                 if (SelGist is null) { throw new Exception(); }
+                if (!SelGist.Files.ContainsKey(Filename)) { return Rtb_Gist.Text; }
 
                 return SelGist.Files[Filename].Content.ToString();
             }
@@ -202,11 +201,18 @@ namespace GistOne.Forms
                 {
                     if ((bool)LI.Tag && SelGist is not null)
                     {
-                        if (SelGist.Files[LI.Text].Content.Trim().ToLower() != Rtb_Gist.Text.Trim().ToLower())
+                        if (SelGist.Files.ContainsKey(LI.Text))
+                        {
+                            if (SelGist.Files[LI.Text].Content.Trim().ToLower() != Rtb_Gist.Text.Trim().ToLower())
+                            {
+                                MessageBox.Show("You need to save first the file " + LI.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                            }
+                            else { LI.Tag = false; LI.ImageIndex = 0; }
+                        }
+                        else
                         {
                             MessageBox.Show("You need to save first the file " + LI.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
                         }
-                        else { LI.Tag = false; LI.ImageIndex = 0; }
                     }
                 }
 
@@ -262,11 +268,45 @@ namespace GistOne.Forms
         }
 
         /// <summary>Before rename a file</summary>
-        private void Lsv_Files_BeforeLabelEdit(object sender, LabelEditEventArgs e)
+        private async void Lsv_Files_BeforeLabelEdit(object sender, LabelEditEventArgs e)
         {
             try
             {
-                if ((bool)Lsv_Files.Items[e.Item].Tag) { e.CancelEdit = true; }
+                using FormFileName FrmName = new(Lsv_Files.Items, e.Item);
+
+                Point P = Lsv_Files.PointToScreen(Point.Empty);
+                Rectangle B = Lsv_Files.Items[e.Item].Bounds;
+
+                FrmName.Location = new Point(P.X + B.X + 20, P.Y + B.Y + 20);
+                if (FrmName.ShowDialog() == DialogResult.OK)
+                {
+
+                    Lsv_Files.Enabled = false;
+
+                    GistNet.RenameFiles RenameF = new(Functions.Settings.Token, SelID);
+                    RenameF.Content.Files.Add(Lsv_Files.Items[e.Item].Text, new(FrmName.NewName));
+
+                    await RenameF.Patch();
+
+                    ReadTheGist();
+
+                    Lsv_Files.Enabled = true;
+                }
+                else
+                {
+                    //if (string.IsNullOrWhiteSpace(Lsv_Files.Items[e.Item].Text)) { 
+
+                    //    Lsv_Files.Items[e.Item].Remove();
+                    //    toolStripSeparator2.Visible = false;
+                    //    TsBtn_Files_Save.Visible = false;
+                    //    TsBtn_Files_Cancel.Visible = false;
+                    //}
+                }
+
+                e.CancelEdit = true;
+
+
+                //if ((bool)Lsv_Files.Items[e.Item].Tag && !string.IsNullOrWhiteSpace(Lsv_Files.Items[e.Item].Text)) { e.CancelEdit = true; }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -274,16 +314,36 @@ namespace GistOne.Forms
         /// <summary>After rename a file</summary>
         private async void Lsv_Files_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
+            return;
             try
             {
-                if (e.Label is null) { return; }
+                if (string.IsNullOrWhiteSpace(e.Label))
+                {
+                    //MessageBox.Show("You need to specific a file name", "Warming", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //e.CancelEdit = true;
+                    Lsv_Files.Items[e.Item].BeginEdit();
+                    return;
+                }
+                else if (CheckFileExists(e.Label))
+                {
+                    //MessageBox.Show("Another file have this name already", "Warming", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //e.CancelEdit = true;
+                    Lsv_Files.Items[e.Item].BeginEdit();
+                    return;
+                }
+                else
+                {
+                    if (e.Label is null) { return; }
 
-                Lsv_Files.Enabled = false;
 
-                GistNet.RenameFiles RenameF = new(Functions.Settings.Token, SelID);
-                RenameF.Content.Files.Add(Lsv_Files.Items[e.Item].Text, new(e.Label));
 
-                await RenameF.Patch();
+                    Lsv_Files.Enabled = false;
+
+                    GistNet.RenameFiles RenameF = new(Functions.Settings.Token, SelID);
+                    RenameF.Content.Files.Add(Lsv_Files.Items[e.Item].Text, new(e.Label));
+
+                    await RenameF.Patch();
+                }
 
                 ReadTheGist();
             }
@@ -291,6 +351,20 @@ namespace GistOne.Forms
             finally { Lsv_Files.Enabled = true; }
         }
 
+        private bool CheckFileExists(string Name)
+        {
+            if (string.IsNullOrWhiteSpace(Name)) return false;
+
+            foreach (ListViewItem E in Lsv_Files.Items)
+            {
+                if (E.Text.Trim().ToLower() == Name.ToLower())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         #region Toolbar Files
 
@@ -298,22 +372,70 @@ namespace GistOne.Forms
         {
             try
             {
-                ListViewItem NewFile = new("New file") { Tag = true };
+                if (FileOpened() is not null) { return; }
 
-                ReadTheGist();
+                Lsv_Files.SelectedItems.Clear();
+
+                ListViewItem NewFile = new() { Tag = true, ImageIndex = 1 };
+                Lsv_Files.Items.Add(NewFile);
+
+                using FormFileName FrmName = new(Lsv_Files.Items, NewFile.Index);
+
+                Point P = Lsv_Files.PointToScreen(Point.Empty);
+                Rectangle B = Lsv_Files.Items[NewFile.Index].Bounds;
+
+                FrmName.Location = new Point(P.X + B.X + 20, P.Y + B.Y + 20);
+                if (FrmName.ShowDialog() == DialogResult.OK)
+                {
+                    NewFile.Text = FrmName.NewName;
+
+                    toolStripSeparator2.Visible = true;
+                    TsBtn_Files_Save.Visible = true;
+                    TsBtn_Files_Cancel.Visible = true;
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(Lsv_Files.Items[NewFile.Index].Text))
+                    {
+
+                        Lsv_Files.Items[NewFile.Index].Remove();
+                        toolStripSeparator2.Visible = false;
+                        TsBtn_Files_Save.Visible = false;
+                        TsBtn_Files_Cancel.Visible = false;
+                    }
+                }
+
+
+                //ReadTheGist();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void TsBtn_Files_Delete_Click(object sender, EventArgs e)
+        private async void TsBtn_Files_Delete_Click(object sender, EventArgs e)
         {
             try
             {
+                if (FileOpened() is not null) { return; }
 
+                if (Lsv_Files.SelectedItems.Count <= 0) { return; }
+
+                if (MessageBox.Show("Delete selected files?","Confirm",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No) { return; }
+
+                Toolbar_Files.Enabled = false;
+
+                GistNet.DeleteFiles DelF = new(Functions.Settings.Token, SelID);
+
+                foreach (ListViewItem Del in Lsv_Files.SelectedItems)
+                {
+                    DelF.Content.Files.Add(Del.Text, new());
+                }
+
+                string jsonString = await DelF.Patch();
 
                 ReadTheGist();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            finally { Toolbar_Files.Enabled = true; }
         }
 
         /// <summary>Save the content of a file</summary>
@@ -321,18 +443,25 @@ namespace GistOne.Forms
         {
             try
             {
-                Lsv_Files.Enabled = false;
-
                 ListViewItem? EditItem = FileOpened();
 
                 if (SelGist is null || EditItem is null) { throw new Exception("Can't get the item"); }
+                if (string.IsNullOrWhiteSpace(Rtb_Gist.Text)) { MessageBox.Show("Contents can't be empty", "Warming", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
-                if (SelGist.Files[EditItem.Text].Content.Trim().ToLower() == Rtb_Gist.Text.Trim().ToLower())
+                if (SelGist.Files.ContainsKey(EditItem.Text) && SelGist.Files[EditItem.Text].Content.Trim().ToLower() == Rtb_Gist.Text.Trim().ToLower())
                 {
                     EditItem.ImageIndex = 0;
                     EditItem.Tag = false;
+
+                    Rtb_Gist.Text = string.Empty;
+                    toolStripSeparator2.Visible = false;
+                    TsBtn_Files_Save.Visible = false;
+                    TsBtn_Files_Cancel.Visible = false;
                     return;
                 }
+
+                Toolbar_Files.Enabled = false;
+                Lsv_Files.Enabled = false;
 
                 GistNet.UpdateGist EditFileContent = new(Functions.Settings.Token, SelID);
                 EditFileContent.Content.Description = SelGist.Description; // Mandatory or will erase the description
@@ -344,6 +473,7 @@ namespace GistOne.Forms
                 EditItem.Tag = false;
 
                 Rtb_Gist.Text = string.Empty;
+                Toolbar_Files.Enabled = true;
                 Lsv_Files.Enabled = true;
                 toolStripSeparator2.Visible = false;
                 TsBtn_Files_Save.Visible = false;
@@ -371,6 +501,7 @@ namespace GistOne.Forms
                 ListViewItem? EditItem = FileOpened();
 
                 if (SelGist is null || EditItem is null) { throw new Exception("Can't get the item"); }
+                if (!SelGist.Files.ContainsKey(EditItem.Text)) { EditItem.Remove(); }
 
                 EditItem.ImageIndex = 0;
                 EditItem.Tag = false;
@@ -392,7 +523,7 @@ namespace GistOne.Forms
         {
             try
             {
-                if (Lsv_Versions.SelectedItems.Count== 0) { return; }
+                if (Lsv_Versions.SelectedItems.Count == 0) { return; }
                 Functions.NavigateToURL(Lsv_Versions.SelectedItems[0].Tag.ToString() ?? "");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
