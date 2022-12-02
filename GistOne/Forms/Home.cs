@@ -10,13 +10,15 @@ namespace GistOne.Forms
         public Home()
         {
             InitializeComponent();
+
+            Dgw_Gists.DoubleBuffering();
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
             try
             {
-
+                ClearCntls();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -25,37 +27,32 @@ namespace GistOne.Forms
         {
             try
             {
-                await LoadGists("", 1);
+                await LoadGists("", 30, 1);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private async Task LoadGists(string Filter, int CurPage)
+        private async Task LoadGists(string Filter, int PerPage, int CurPage)
         {
             try
             {
                 ClearCntls();
                 Dgw_Gists.Rows.Clear();
-                Dgw_Gists.Rows.Add(string.Empty, Properties.Resources.arrow_refresh, "Loading. Please wait...");
+                Dgw_Gists.Rows.Add(string.Empty, Properties.Resources.arrow_refresh, "Loading. Please wait...", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
                 Dgw_Gists.ClearSelection();
 
-                //await Task.Delay(100); // Just for avoid form flicker
+                await Task.Delay(100); // Just for avoid form flicker
 
                 GistsList.Clear();
 
-                //while (true)
-                //{
-                    GistNet.Explore TheGist = new(Functions.Settings.Token, CurPage);
-                    string ReturnedString = await TheGist.GetAll();
+                GistNet.Explore TheGist = new(Functions.Settings.Token, PerPage, CurPage);
+                string ReturnedString = await TheGist.GetAll();
 
-                    List<Gist> TempList = JsonSerializer.Deserialize<List<Gist>>(ReturnedString);
+                List<Gist> TempList = JsonSerializer.Deserialize<List<Gist>>(ReturnedString);
 
-                    if (TempList is null || TempList.Count == 0) { return; }
+                if (TempList is null || TempList.Count == 0) { return; }
 
-                    GistsList.AddRange(TempList);
-
-                    CurPage++;
-                //}
+                GistsList.AddRange(TempList);
 
                 if (GistsList is null) { throw new Exception("Json is empty"); }
 
@@ -67,21 +64,18 @@ namespace GistOne.Forms
 
                     if (G.Description.Contains(Filter, StringComparison.OrdinalIgnoreCase))
                     {
-                        //dt.Rows.Add(G.ID, Properties.Resources.info_rhombus, G.Description);
-                        Image Icon = G.Public ? Properties.Resources.page_white_world : Properties.Resources.page_white;
-                        Dgw_Gists.Rows.Add(G.ID, Icon, G.Description, G.Owner.Login, G.Created_At, G.Updated_At, G.HTML_URL);
+                        Image Icon = await Functions.GetImageFromWebAsync(G.Owner.Avatar_URL);
+                        Dgw_Gists.Rows.Add(G.ID, Icon,string.IsNullOrEmpty( G.Description) ? G.Files.FirstOrDefault().Key.ToString():G.Description , G.Owner.Login, G.Created_At, G.Updated_At, G.HTML_URL);
                     }
                 }
 
                 Dgw_Gists.ClearSelection();
                 ClearCntls();
-
-                //Dgw_Gists.DataSource = dt;
             }
             catch (Exception ex)
             {
                 Dgw_Gists.Rows.Clear();
-                Dgw_Gists.Rows.Add(string.Empty, Properties.Resources.exclamation, ex.Message);
+                Dgw_Gists.Rows.Add(string.Empty, Properties.Resources.exclamation, ex.Message, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
                 Dgw_Gists.ClearSelection();
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -93,8 +87,7 @@ namespace GistOne.Forms
 
         private void ClearCntls()
         {
-
-
+            Cmb_GistsPerPage.SelectedIndex = 2;
             TsLbl_Total.Text = "Total: 0";
         }
 
@@ -115,6 +108,7 @@ namespace GistOne.Forms
             try
             {
                 int CurPage = Convert.ToInt32(Txt_Page.Text);
+                int PerPage = Convert.ToInt32(Cmb_GistsPerPage.SelectedItem.ToString());
 
                 if (CurPage == 0)
                 {
@@ -127,7 +121,7 @@ namespace GistOne.Forms
                     Txt_Page.Text = CurPage.ToString();
                 }
 
-                await LoadGists("", CurPage);
+                await LoadGists("", PerPage, CurPage);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -137,11 +131,13 @@ namespace GistOne.Forms
             try
             {
                 int CurPage = Convert.ToInt32(Txt_Page.Text);
-                    TsBtn_PagePrev.Enabled = true;
-                    CurPage += 1;
-                    Txt_Page.Text = CurPage.ToString();
-           
-                await LoadGists("", CurPage);
+                int PerPage = Convert.ToInt32(Cmb_GistsPerPage.SelectedItem.ToString());
+
+                TsBtn_PagePrev.Enabled = true;
+                CurPage += 1;
+                Txt_Page.Text = CurPage.ToString();
+
+                await LoadGists("", PerPage, CurPage);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -150,11 +146,100 @@ namespace GistOne.Forms
         {
             try
             {
-                await LoadGists("", Convert.ToInt32(Txt_Page.Text));
+                int PerPage = Convert.ToInt32(Cmb_GistsPerPage.SelectedItem.ToString());
+
+                await LoadGists("", PerPage, Convert.ToInt32(Txt_Page.Text));
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
+        private void Home_Resize(object sender, EventArgs e)
+        {
+            try
+            {
+                DgwCol_Description.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Home_StyleChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DgwCol_Description.Width = Dgw_Gists.Width - 20 - DgwCol_Img.Width;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Dgw_Gists_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            try
+            {
+                if (Dgw_Gists.Columns["DgwCol_Description"].Index == e.ColumnIndex && e.RowIndex >= 0)
+                {
+                    using (Brush GridBrush = new SolidBrush(Dgw_Gists.GridColor), BackColorBrush = new SolidBrush(e.CellStyle.BackColor))
+                    {
+                        using (Pen GridLinePen = new Pen(GridBrush))
+                        {
+                            // Erase the cell.
+                            e.Graphics.FillRectangle(BackColorBrush, e.CellBounds);
+                            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
+
+
+                            Image Avatar = (Image)Dgw_Gists.Rows[e.RowIndex].Cells[Dgw_Gists.Columns["DgwCol_Img"].Index].Value;
+
+                            e.Graphics.DrawImage((Image)new Bitmap(Avatar, new Size(70, 70)), new Point(e.CellBounds.X + 10, e.CellBounds.Y + 10));
+
+
+
+
+
+
+                            Font FontID = new("Courier New", 10, FontStyle.Bold);
+                            string StrID = Dgw_Gists.Rows[e.RowIndex].Cells[Dgw_Gists.Columns["DgwCol_ID"].Index].Value.ToString() ?? "No ID ?!";
+                            Size SizeID = TextRenderer.MeasureText(StrID, FontID);
+
+                            Font FontUser = new(e.CellStyle.Font.FontFamily, 11, FontStyle.Regular);
+                            string StrUser = Dgw_Gists.Rows[e.RowIndex].Cells[Dgw_Gists.Columns["DgwCol_User"].Index].Value.ToString() ?? "No user ?!";
+                            Size SizeUser = TextRenderer.MeasureText(StrUser, FontUser);
+
+                            Font FontDesc = new(e.CellStyle.Font.FontFamily, 15, FontStyle.Regular);
+                            string StrDesc = Dgw_Gists.Rows[e.RowIndex].Cells[Dgw_Gists.Columns["DgwCol_Description"].Index].Value.ToString() ?? "";
+                            Size SizeDesc = TextRenderer.MeasureText(StrDesc, FontDesc);
+
+                            Font FontDate = new(e.CellStyle.Font.FontFamily, 10, FontStyle.Regular);
+                            string StrDate = Dgw_Gists.Rows[e.RowIndex].Cells[Dgw_Gists.Columns["DgwCol_Created"].Index].Value.ToString() ?? "No date ?!";
+                            Size SizeDate = TextRenderer.MeasureText(StrDate, FontDate);
+
+                            //if (e.Value != null)
+                            //{
+
+                            e.Graphics.DrawString(StrID, FontID, Brushes.Silver, e.CellBounds.Width - SizeID.Width + DgwCol_Img.Width - 10,
+                                e.CellBounds.Y + 10, StringFormat.GenericDefault);
+
+                            e.Graphics.DrawString(StrUser, FontUser, Brushes.Black, e.CellBounds.X + 2 + 80,
+                                e.CellBounds.Y + 10, StringFormat.GenericDefault);
+
+                            e.Graphics.DrawString(StrDesc, FontDesc, Brushes.Black, e.CellBounds.X + 2 + 80,
+                                e.CellBounds.Y + (SizeUser.Height == 0 ? 15 : SizeUser.Height) + 10, StringFormat.GenericDefault);
+
+                            e.Graphics.DrawString(StrDate, FontDate, Brushes.DarkGray, e.CellBounds.X + 2 + 80,
+                                e.CellBounds.Y + SizeUser.Height + 5 + SizeDesc.Height + 5, StringFormat.GenericDefault);
+                            //}
+                            e.Handled = true;
+                        }
+                    }
+                }
+
+                //if (Dgw_Gists.Columns["DgwCol_Img"].Index == e.ColumnIndex && e.RowIndex >= 0)
+                //{
+
+                //}
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
 
         //private void button3_Click(object sender, EventArgs e)
         //{

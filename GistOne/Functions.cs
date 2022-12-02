@@ -1,7 +1,6 @@
 ﻿using GistOne.Forms;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace GistOne
 {
@@ -88,7 +87,8 @@ namespace GistOne
         internal static LoadFormType LoadOneForms(Form F)
         {
             if (FM == null) { return LoadFormType.None; }
-            if(FM.panel1.Controls.ContainsKey(F.Name)) { 
+            if (FM.panel1.Controls.ContainsKey(F.Name))
+            {
                 ParseForm(F.Name, Action.Open);
                 return LoadFormType.Exist;
             }
@@ -168,6 +168,20 @@ namespace GistOne
         {
             if (string.IsNullOrWhiteSpace(URL)) { return; }
             Process.Start(new ProcessStartInfo(URL) { UseShellExecute = true });
+        }
+
+        internal static async Task<Image> GetImageFromWebAsync(string URL)
+        {
+            try
+            {
+                using var httpClient = new HttpClient();
+                var imageContent = await httpClient.GetByteArrayAsync(URL);
+
+                using var imageBuffer = new MemoryStream(imageContent);
+                return Image.FromStream(imageBuffer);
+            }
+            catch (Exception) { return Properties.Resources.page_white_world; }
+
         }
     }
 }
