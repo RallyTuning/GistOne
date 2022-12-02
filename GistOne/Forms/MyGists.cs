@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace GistOne.Forms
@@ -334,14 +333,30 @@ namespace GistOne.Forms
             {
                 Name = GID,
                 Text = string.IsNullOrWhiteSpace(GDesc) ? GID : GDesc,
-                TopLevel = false          // First
-            };                           //
-            Functions.LoadOneForms(OG); // Then
-            OG.Dock = DockStyle.Fill;  // Finally
+                TopLevel = false
+            };
 
-            Functions.ParseForm(GID, Functions.Action.Open);
+            Functions.LoadFormType Result = Functions.LoadOneForms(OG);
 
-            Functions.AddEntryOpened(GDesc, GID);
+            switch (Result)
+            {
+                case Functions.LoadFormType.Loaded:
+                    OG.Dock = DockStyle.Fill;
+
+                    Functions.ParseForm(GID, Functions.Action.Open);
+
+                    Functions.AddEntryOpened(GDesc, GID);
+
+                    break;
+
+                case Functions.LoadFormType.Exist:
+                    Functions.ParseForm(GID, Functions.Action.Open);
+
+                    break;
+
+                default:
+                    throw new Exception("Error opening \"" + GDesc + "\" (" + GID + ")");
+            }
 
             Dgw_Gists.ClearSelection();
             ClearCntls();

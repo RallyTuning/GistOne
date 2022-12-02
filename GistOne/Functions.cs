@@ -1,6 +1,7 @@
 ﻿using GistOne.Forms;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace GistOne
 {
@@ -77,13 +78,26 @@ namespace GistOne
             }
         }
 
-        internal static void LoadOneForms(Form F)
+        internal enum LoadFormType
         {
-            if (FM == null) { return; }
+            Loaded,
+            Exist,
+            None
+        }
+
+        internal static LoadFormType LoadOneForms(Form F)
+        {
+            if (FM == null) { return LoadFormType.None; }
+            if(FM.panel1.Controls.ContainsKey(F.Name)) { 
+                ParseForm(F.Name, Action.Open);
+                return LoadFormType.Exist;
+            }
 
             F.TopLevel = false;         // First
             FM.panel1.Controls.Add(F); // Then
             F.Dock = DockStyle.Fill;  // Finally
+
+            return LoadFormType.Loaded;
         }
 
         internal enum Action { Open, Close }
