@@ -31,6 +31,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.Dgw_Gists = new System.Windows.Forms.DataGridView();
+            this.DgwCol_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgwCol_Img = new System.Windows.Forms.DataGridViewImageColumn();
+            this.DgwCol_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgwCol_User = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgwCol_Created = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgwCol_LastEdit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DgwCol_URL = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Toolbar_Gists = new System.Windows.Forms.ToolStrip();
             this.TsLbl_Total = new System.Windows.Forms.ToolStripLabel();
             this.TsBtn_Open = new System.Windows.Forms.ToolStripButton();
@@ -42,13 +49,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.Cmb_GistsPerPage = new System.Windows.Forms.ToolStripComboBox();
-            this.DgwCol_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_Img = new System.Windows.Forms.DataGridViewImageColumn();
-            this.DgwCol_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_User = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_Created = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_LastEdit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DgwCol_URL = new System.Windows.Forms.DataGridViewLinkColumn();
             ((System.ComponentModel.ISupportInitialize)(this.Dgw_Gists)).BeginInit();
             this.Toolbar_Gists.SuspendLayout();
             this.SuspendLayout();
@@ -113,6 +113,75 @@
             this.Dgw_Gists.Size = new System.Drawing.Size(860, 421);
             this.Dgw_Gists.TabIndex = 4;
             this.Dgw_Gists.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.Dgw_Gists_CellPainting);
+            this.Dgw_Gists.DoubleClick += new System.EventHandler(this.Dgw_Gists_DoubleClick);
+            // 
+            // DgwCol_ID
+            // 
+            this.DgwCol_ID.Frozen = true;
+            this.DgwCol_ID.HeaderText = "ID";
+            this.DgwCol_ID.MaxInputLength = 256;
+            this.DgwCol_ID.Name = "DgwCol_ID";
+            this.DgwCol_ID.ReadOnly = true;
+            this.DgwCol_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_ID.Visible = false;
+            // 
+            // DgwCol_Img
+            // 
+            this.DgwCol_Img.Frozen = true;
+            this.DgwCol_Img.HeaderText = "Image";
+            this.DgwCol_Img.MinimumWidth = 80;
+            this.DgwCol_Img.Name = "DgwCol_Img";
+            this.DgwCol_Img.ReadOnly = true;
+            this.DgwCol_Img.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_Img.Visible = false;
+            this.DgwCol_Img.Width = 80;
+            // 
+            // DgwCol_Description
+            // 
+            this.DgwCol_Description.Frozen = true;
+            this.DgwCol_Description.HeaderText = "Description";
+            this.DgwCol_Description.Name = "DgwCol_Description";
+            this.DgwCol_Description.ReadOnly = true;
+            this.DgwCol_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // DgwCol_User
+            // 
+            this.DgwCol_User.Frozen = true;
+            this.DgwCol_User.HeaderText = "User";
+            this.DgwCol_User.MaxInputLength = 500;
+            this.DgwCol_User.Name = "DgwCol_User";
+            this.DgwCol_User.ReadOnly = true;
+            this.DgwCol_User.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_User.Visible = false;
+            // 
+            // DgwCol_Created
+            // 
+            this.DgwCol_Created.Frozen = true;
+            this.DgwCol_Created.HeaderText = "Created";
+            this.DgwCol_Created.MaxInputLength = 500;
+            this.DgwCol_Created.Name = "DgwCol_Created";
+            this.DgwCol_Created.ReadOnly = true;
+            this.DgwCol_Created.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_Created.Visible = false;
+            // 
+            // DgwCol_LastEdit
+            // 
+            this.DgwCol_LastEdit.Frozen = true;
+            this.DgwCol_LastEdit.HeaderText = "Last Edit";
+            this.DgwCol_LastEdit.MaxInputLength = 500;
+            this.DgwCol_LastEdit.Name = "DgwCol_LastEdit";
+            this.DgwCol_LastEdit.ReadOnly = true;
+            this.DgwCol_LastEdit.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_LastEdit.Visible = false;
+            // 
+            // DgwCol_URL
+            // 
+            this.DgwCol_URL.Frozen = true;
+            this.DgwCol_URL.HeaderText = "URL";
+            this.DgwCol_URL.Name = "DgwCol_URL";
+            this.DgwCol_URL.ReadOnly = true;
+            this.DgwCol_URL.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgwCol_URL.Visible = false;
             // 
             // Toolbar_Gists
             // 
@@ -219,74 +288,6 @@
             "100"});
             this.Cmb_GistsPerPage.Name = "Cmb_GistsPerPage";
             this.Cmb_GistsPerPage.Size = new System.Drawing.Size(55, 23);
-            // 
-            // DgwCol_ID
-            // 
-            this.DgwCol_ID.Frozen = true;
-            this.DgwCol_ID.HeaderText = "ID";
-            this.DgwCol_ID.MaxInputLength = 256;
-            this.DgwCol_ID.Name = "DgwCol_ID";
-            this.DgwCol_ID.ReadOnly = true;
-            this.DgwCol_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_ID.Visible = false;
-            // 
-            // DgwCol_Img
-            // 
-            this.DgwCol_Img.Frozen = true;
-            this.DgwCol_Img.HeaderText = "Image";
-            this.DgwCol_Img.MinimumWidth = 80;
-            this.DgwCol_Img.Name = "DgwCol_Img";
-            this.DgwCol_Img.ReadOnly = true;
-            this.DgwCol_Img.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_Img.Visible = false;
-            this.DgwCol_Img.Width = 80;
-            // 
-            // DgwCol_Description
-            // 
-            this.DgwCol_Description.Frozen = true;
-            this.DgwCol_Description.HeaderText = "Description";
-            this.DgwCol_Description.Name = "DgwCol_Description";
-            this.DgwCol_Description.ReadOnly = true;
-            this.DgwCol_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // DgwCol_User
-            // 
-            this.DgwCol_User.Frozen = true;
-            this.DgwCol_User.HeaderText = "User";
-            this.DgwCol_User.MaxInputLength = 500;
-            this.DgwCol_User.Name = "DgwCol_User";
-            this.DgwCol_User.ReadOnly = true;
-            this.DgwCol_User.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_User.Visible = false;
-            // 
-            // DgwCol_Created
-            // 
-            this.DgwCol_Created.Frozen = true;
-            this.DgwCol_Created.HeaderText = "Created";
-            this.DgwCol_Created.MaxInputLength = 500;
-            this.DgwCol_Created.Name = "DgwCol_Created";
-            this.DgwCol_Created.ReadOnly = true;
-            this.DgwCol_Created.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_Created.Visible = false;
-            // 
-            // DgwCol_LastEdit
-            // 
-            this.DgwCol_LastEdit.Frozen = true;
-            this.DgwCol_LastEdit.HeaderText = "Last Edit";
-            this.DgwCol_LastEdit.MaxInputLength = 500;
-            this.DgwCol_LastEdit.Name = "DgwCol_LastEdit";
-            this.DgwCol_LastEdit.ReadOnly = true;
-            this.DgwCol_LastEdit.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_LastEdit.Visible = false;
-            // 
-            // DgwCol_URL
-            // 
-            this.DgwCol_URL.Frozen = true;
-            this.DgwCol_URL.HeaderText = "URL";
-            this.DgwCol_URL.Name = "DgwCol_URL";
-            this.DgwCol_URL.ReadOnly = true;
-            this.DgwCol_URL.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DgwCol_URL.Visible = false;
             // 
             // Home
             // 
